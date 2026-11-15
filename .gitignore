@@ -4,3 +4,5 @@ Thumbs.db
 .system_generated/
 edge_profile*/
 temp_profile*/
+
+.vercel

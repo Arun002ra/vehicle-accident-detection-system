@@ -1,6 +1,4 @@
 {
-  "version": 2,
-  "name": "vehicle-accident-detection-system",
   "cleanUrls": true,
   "trailingSlash": false
 }
