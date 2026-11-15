@@ -2,7 +2,10 @@
 
 An interactive, high-fidelity real-time simulation and college demonstration platform for an IoT-based **Vehicle Accident Detection and Alert System**.
 
-This project provides a realistic, visual demonstration of an intelligent embedded vehicle safety unit that continuously monitors vehicle motion with multi-axis sensors, detects collision events in milliseconds, locks GPS coordinates, and dispatches emergency alerts to family contacts and nearest ambulance trauma centers.
+### 🌐 Live Public Demos
+- **GitHub Pages (100% Public)**: [https://arun002ra.github.io/vehicle-accident-detection-system/](https://arun002ra.github.io/vehicle-accident-detection-system/)
+- **GitHub Repository**: [https://github.com/Arun002ra/vehicle-accident-detection-system](https://github.com/Arun002ra/vehicle-accident-detection-system)
+- **1-Click Vercel Deploy**: [Deploy to Vercel](https://vercel.com/new/clone?repository-url=https://github.com/Arun002ra/vehicle-accident-detection-system)
 
 ---
 
