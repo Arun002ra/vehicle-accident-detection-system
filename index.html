@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Accident Detection and Alert System Using Sensors</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="theme-dark">
+  <div class="app-container">
+    <!-- Top System Navigation Header -->
+    <header class="system-header">
+      <div class="brand-section">
+        <div class="system-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+          <span class="logo-pulse"></span>
+        </div>
+        <div>
+          <h1 class="project-title">Vehicle Accident Detection & Alert System</h1>
+          <p class="project-subtitle">IoT & Multi-Sensor Telemetry Simulation Prototype (ADXL345 • MPU6050 • SW420 • NEO-6M)</p>
+        </div>
+      </div>
+
+      <div class="header-status-panel">
+        <div class="status-chip" id="chip-mcu">
+          <span class="chip-dot dot-green"></span>
+          <span class="chip-label">MCU:</span>
+          <span class="chip-value">ESP32 (Active)</span>
+        </div>
+        <div class="status-chip" id="chip-gps">
+          <span class="chip-dot dot-green"></span>
+          <span class="chip-label">GPS:</span>
+          <span class="chip-value" id="gps-sat-status">3D Fix (9 Sats)</span>
+        </div>
+        <div class="status-chip" id="chip-gsm">
+          <span class="chip-dot dot-green"></span>
+          <span class="chip-label">GSM:</span>
+          <span class="chip-value" id="gsm-network-status">SIM800L Ready</span>
+        </div>
+        <div class="status-chip chip-vehicle">
+          <span class="chip-label">VEHICLE ID:</span>
+          <span class="chip-value text-cyan">TN-09-CB-4092</span>
+        </div>
+        <button id="btn-toggle-sound" class="btn-icon" title="Toggle Simulation Audio FX">
+          <svg id="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <svg id="icon-sound-off" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+          <span id="sound-label">Audio ON</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Presentation / Scene Banner -->
+    <div class="presentation-banner" id="presentation-banner">
+      <div class="scene-badge">
+        <span class="badge-icon">🎬</span>
+        <span id="current-scene-badge">SCENE 1 of 8</span>
+      </div>
+      <div class="scene-narrative-container">
+        <span class="scene-title" id="current-scene-title">Normal Vehicle Cruising</span>
+        <span class="scene-desc" id="current-scene-desc">Host vehicle travels smoothly along the expressway. Onboard sensors continuously monitor vibration, orientation, and acceleration baseline readings.</span>
+      </div>
+      <div class="demo-playback-controls">
+        <button id="btn-prev-scene" class="btn-demo-nav" title="Previous Scene">◀ Prev</button>
+        <button id="btn-toggle-demo" class="btn-demo-primary">
+          <span id="demo-btn-icon">▶</span>
+          <span id="demo-btn-text">Auto College Demo</span>
+        </button>
+        <button id="btn-next-scene" class="btn-demo-nav" title="Next Scene">Next ▶</button>
+      </div>
+    </div>
+
+    <!-- Main Dashboard Grid -->
+    <main class="dashboard-grid">
+      <!-- Left Column: Simulation Viewport & Controls -->
+      <section class="viewport-section">
+        <div class="card simulation-card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <span class="card-icon">🚗</span>
+              <h2 class="card-title">Live Roadway Environment & Collision Simulation</h2>
+            </div>
+            <div class="viewport-meta">
+              <span class="meta-tag" id="vehicle-speed-tag">Speed: 72 km/h</span>
+              <span class="meta-tag badge-live">SIMULATED REALTIME</span>
+            </div>
+          </div>
+
+          <div class="canvas-wrapper" id="canvas-container">
+            <!-- Road Canvas -->
+            <canvas id="simulation-canvas"></canvas>
+
+            <!-- Dynamic HUD Overlay inside Canvas -->
+            <div class="hud-overlay" id="hud-overlay">
+              <div class="hud-top-left">
+                <div class="hud-data-item">
+                  <span class="hud-label">ENGINE:</span>
+                  <span class="hud-val text-green" id="hud-engine">RUNNING (3,200 RPM)</span>
+                </div>
+                <div class="hud-data-item">
+                  <span class="hud-label">THROTTLE:</span>
+                  <span class="hud-val" id="hud-throttle">65% CRUISE</span>
+                </div>
+              </div>
+              <div class="hud-top-right">
+                <div class="hud-data-item">
+                  <span class="hud-label">COLLISION RADAR:</span>
+                  <span class="hud-val text-cyan" id="hud-radar">CLEAR (38m)</span>
+                </div>
+                <div class="hud-data-item">
+                  <span class="hud-label">SAFETY STATUS:</span>
+                  <span class="hud-val text-green" id="hud-status">NORMAL TRANSIT</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Impact Visual Splash Badge -->
+            <div class="impact-flash-badge" id="impact-flash-badge">
+              <div class="impact-ring"></div>
+              <div class="impact-text">IMPACT DETECTED!</div>
+              <div class="impact-sub" id="impact-g-display">8.4G DECELERATION</div>
+            </div>
+          </div>
+
+          <!-- Simulation Interactive Controls Toolbar -->
+          <div class="controls-toolbar">
+            <div class="control-group-left">
+              <button id="btn-start-sim" class="btn btn-success" disabled>
+                <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span id="start-btn-label">Simulation Active</span>
+              </button>
+              <button id="btn-stop-sim" class="btn btn-outline">
+                <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12"/></svg>
+                Pause
+              </button>
+              <button id="btn-trigger-accident" class="btn btn-danger btn-pulse">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99zM11 10h2v4h-2zm0 6h2v2h-2z"/></svg>
+                Trigger Accident Event
+              </button>
+            </div>
+            <div class="control-group-right">
+              <button id="btn-send-sos" class="btn btn-warning" title="Manually trigger emergency broadcast">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                Manual SOS Alert
+              </button>
+              <button id="btn-reset-sim" class="btn btn-secondary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                Reset System
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- System Architecture & Logic Flow Visualizer -->
+        <div class="card logic-flow-card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <span class="card-icon">⚡</span>
+              <h3 class="card-title">Accident Detection Processing Pipeline</h3>
+            </div>
+            <span class="flow-latency">Loop Latency: 12ms</span>
+          </div>
+          <div class="pipeline-stepper">
+            <div class="step-item step-active" id="pipe-step-1">
+              <div class="step-circle">1</div>
+              <div class="step-info">
+                <span class="step-name">Continuous Sampling</span>
+                <span class="step-desc">I2C / SPI at 100Hz</span>
+              </div>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-item" id="pipe-step-2">
+              <div class="step-circle">2</div>
+              <div class="step-info">
+                <span class="step-name">Threshold Evaluation</span>
+                <span class="step-desc">G-Force &gt; 4.0G &amp; Tilt</span>
+              </div>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-item" id="pipe-step-3">
+              <div class="step-circle">3</div>
+              <div class="step-info">
+                <span class="step-name">Accident Confirmation</span>
+                <span class="step-desc">Multi-Sensor Fusion</span>
+              </div>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-item" id="pipe-step-4">
+              <div class="step-circle">4</div>
+              <div class="step-info">
+                <span class="step-name">GPS Coordinate Lock</span>
+                <span class="step-desc">NMEA Lat/Long Fix</span>
+              </div>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-item" id="pipe-step-5">
+              <div class="step-circle">5</div>
+              <div class="step-info">
+                <span class="step-name">Emergency Dispatch</span>
+                <span class="step-desc">GSM SMS &amp; Cloud API</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Live Sensor Telemetry Dashboard -->
+      <section class="telemetry-section">
+        <!-- Sensor 1: 3-Axis Accelerometer -->
+        <div class="card sensor-card" id="card-accel">
+          <div class="sensor-header">
+            <div class="sensor-title-box">
+              <span class="sensor-badge badge-blue">ADXL345 / MPU6050</span>
+              <h3 class="sensor-name">3-Axis Accelerometer (G-Force)</h3>
+            </div>
+            <div class="sensor-threshold-badge" id="accel-status-badge">NORMAL &lt; 4.0G</div>
+          </div>
+
+          <div class="sensor-metric-row">
+            <div class="metric-box">
+              <span class="metric-label">X-Axis (Lateral)</span>
+              <span class="metric-val text-cyan" id="val-accel-x">+0.04 G</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-label">Y-Axis (Longitudinal)</span>
+              <span class="metric-val text-blue" id="val-accel-y">-0.12 G</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-label">Z-Axis (Vertical)</span>
+              <span class="metric-val text-purple" id="val-accel-z">+0.99 G</span>
+            </div>
+            <div class="metric-box highlight-box">
+              <span class="metric-label">Vector Sum (Total)</span>
+              <span class="metric-val text-bold" id="val-accel-total">1.00 G</span>
+            </div>
+          </div>
+
+          <div class="chart-container">
+            <canvas id="chart-accel" height="85"></canvas>
+            <div class="chart-legend">
+              <span class="legend-item"><span class="legend-color color-cyan"></span> X-Axis</span>
+              <span class="legend-item"><span class="legend-color color-blue"></span> Y-Axis</span>
+              <span class="legend-item"><span class="legend-color color-purple"></span> Z-Axis</span>
+              <span class="legend-item"><span class="legend-color color-red-dash"></span> Threshold (4.0G)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sensor 2: 3-Axis Gyroscope -->
+        <div class="card sensor-card" id="card-gyro">
+          <div class="sensor-header">
+            <div class="sensor-title-box">
+              <span class="sensor-badge badge-cyan">MPU6050 GYRO</span>
+              <h3 class="sensor-name">Vehicle Tilt &amp; Angular Velocity</h3>
+            </div>
+            <div class="sensor-threshold-badge" id="gyro-status-badge">STABLE</div>
+          </div>
+
+          <div class="sensor-metric-row">
+            <div class="metric-box">
+              <span class="metric-label">Roll (Bank Angle)</span>
+              <span class="metric-val" id="val-gyro-roll">0.8 °/s</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-label">Pitch (Grade)</span>
+              <span class="metric-val" id="val-gyro-pitch">-0.4 °/s</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-label">Yaw (Rotation Rate)</span>
+              <span class="metric-val" id="val-gyro-yaw">1.2 °/s</span>
+            </div>
+            <div class="metric-box highlight-box">
+              <span class="metric-label">Tilt Orientation</span>
+              <span class="metric-val text-green" id="val-gyro-orientation">LEVEL (0.2°)</span>
+            </div>
+          </div>
+
+          <div class="chart-container">
+            <canvas id="chart-gyro" height="85"></canvas>
+            <div class="chart-legend">
+              <span class="legend-item"><span class="legend-color color-yellow"></span> Roll</span>
+              <span class="legend-item"><span class="legend-color color-orange"></span> Pitch</span>
+              <span class="legend-item"><span class="legend-color color-emerald"></span> Yaw</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sensor 3: Piezo / Vibration Impact Sensor & Sensor 4: GPS Module (Dual Row) -->
+        <div class="sensor-split-row">
+          <!-- Piezo Vibration Sensor -->
+          <div class="card sensor-card-half" id="card-vibration">
+            <div class="sensor-header">
+              <div class="sensor-title-box">
+                <span class="sensor-badge badge-amber">SW-420 PIEZO</span>
+                <h4 class="sensor-name">Vibration / Impact</h4>
+              </div>
+              <span class="status-indicator-tag" id="vibe-tag">NORMAL</span>
+            </div>
+            
+            <div class="vibration-meter-wrapper">
+              <div class="vibe-value-display">
+                <span class="vibe-main-number" id="val-vibe-percent">14%</span>
+                <span class="vibe-sub">Peak: <strong id="val-vibe-peak">22%</strong></span>
+              </div>
+              <div class="vibe-progress-bar-bg">
+                <div class="vibe-progress-bar-fill" id="vibe-progress-bar" style="width: 14%;"></div>
+                <div class="vibe-threshold-line" title="Trigger Threshold (75%)"></div>
+              </div>
+              <div class="vibe-bar-labels">
+                <span>0% Ambient</span>
+                <span class="text-amber">75% Impact Trigger</span>
+                <span>100%</span>
+              </div>
+            </div>
+
+            <canvas id="chart-vibration" height="50"></canvas>
+          </div>
+
+          <!-- GPS Module (NEO-6M) & Mini Radar Map -->
+          <div class="card sensor-card-half" id="card-gps">
+            <div class="sensor-header">
+              <div class="sensor-title-box">
+                <span class="sensor-badge badge-emerald">NEO-6M GPS</span>
+                <h4 class="sensor-name">GPS Geolocation</h4>
+              </div>
+              <span class="status-indicator-tag" id="gps-lock-tag">LOCK ACQUIRED</span>
+            </div>
+
+            <div class="gps-data-grid">
+              <div class="gps-data-line">
+                <span class="gps-key">LATITUDE:</span>
+                <span class="gps-val font-mono" id="gps-lat">13.0827° N</span>
+              </div>
+              <div class="gps-data-line">
+                <span class="gps-key">LONGITUDE:</span>
+                <span class="gps-val font-mono" id="gps-lon">80.2707° E</span>
+              </div>
+              <div class="gps-data-line">
+                <span class="gps-key">LOCATION:</span>
+                <span class="gps-val" id="gps-location-name">Grand Southern Trunk Rd, NH-45</span>
+              </div>
+              <div class="gps-data-line">
+                <span class="gps-key">ACCURACY:</span>
+                <span class="gps-val text-green" id="gps-accuracy">± 1.8 meters (HDOP 0.9)</span>
+              </div>
+            </div>
+
+            <!-- Mini Radar / Street Canvas -->
+            <div class="mini-map-container">
+              <canvas id="mini-map-canvas" height="65"></canvas>
+              <div class="map-target-crosshair"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulated GSM Transmission & Cloud Event Log -->
+        <div class="card gsm-terminal-card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <span class="card-icon">📡</span>
+              <h3 class="card-title">SIM800L GSM &amp; IoT Cloud Dispatch Terminal</h3>
+            </div>
+            <span class="baud-rate">9600 BAUD • AT INTERFACE</span>
+          </div>
+          <div class="terminal-body" id="gsm-terminal-body">
+            <div class="terminal-line text-muted">[SYS_INIT] Booting ESP32 System Core 1... Sensors calibrated OK.</div>
+            <div class="terminal-line text-muted">[GSM_READY] AT+CPIN? -> +CPIN: READY</div>
+            <div class="terminal-line text-muted">[GPS_READY] $GPGGA: 3D Fix confirmed. Geofence active.</div>
+            <div class="terminal-line text-green">[STANDBY] Telemetry polling active. Crash detection loop armed.</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Emergency Alert Modal (Appears upon accident confirmation) -->
+    <div class="modal-overlay hidden" id="emergency-alert-modal">
+      <div class="modal-dialog alert-dialog-pulse">
+        <!-- Red Danger Banner Header -->
+        <div class="modal-alert-header">
+          <div class="alert-icon-ring">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99zM11 10h2v4h-2zm0 6h2v2h-2z"/>
+            </svg>
+          </div>
+          <div class="alert-header-text">
+            <h2 class="alert-title">AUTOMATIC EMERGENCY ACCIDENT ALERT</h2>
+            <p class="alert-subtext">Onboard sensor threshold breached. Multi-sensor fusion confirmed severe collision.</p>
+          </div>
+          <div class="countdown-badge" id="modal-countdown-badge">
+            <span class="countdown-seconds" id="countdown-val">5s</span>
+            <span class="countdown-label">AUTO-DISPATCH</span>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <!-- Critical Telemetry Summary Grid -->
+          <div class="alert-summary-grid">
+            <div class="summary-cell">
+              <span class="summary-label">VEHICLE IDENTIFIER</span>
+              <span class="summary-value font-mono text-cyan">TN-09-CB-4092</span>
+              <span class="summary-sub">Registered to: Arunraj S.</span>
+            </div>
+            <div class="summary-cell">
+              <span class="summary-label">DETECTION TIMESTAMP</span>
+              <span class="summary-value" id="alert-time">Today, 17:34:12 IST</span>
+              <span class="summary-sub">Response Latency: 280ms</span>
+            </div>
+            <div class="summary-cell">
+              <span class="summary-label">IMPACT SEVERITY</span>
+              <span class="summary-value text-red" id="alert-severity">HIGH SEVERITY (8.4G)</span>
+              <span class="summary-sub" id="alert-impact-details">Frontal Collision • Yaw Shift 48°</span>
+            </div>
+            <div class="summary-cell">
+              <span class="summary-label">LOCKED GPS COORDINATES</span>
+              <span class="summary-value font-mono text-amber" id="alert-coords">13.0827° N, 80.2707° E</span>
+              <span class="summary-sub" id="alert-address">Grand Southern Trunk Rd, Chennai</span>
+            </div>
+          </div>
+
+          <!-- Live Google Maps Simulated Frame -->
+          <div class="simulated-map-box">
+            <div class="map-header-bar">
+              <span>📍 Simulated Crash Site Geolocation</span>
+              <a href="#" class="map-link-btn" onclick="event.preventDefault(); window.open('https://www.google.com/maps?q=13.0827,80.2707', '_blank');">Open in Google Maps ↗</a>
+            </div>
+            <div class="map-visual-placeholder">
+              <div class="radar-ping-ring"></div>
+              <div class="radar-ping-center"></div>
+              <div class="map-label-bubble">
+                <strong>CRASH INCIDENT PINPOINT</strong>
+                <span>TN-09-CB-4092 • 13.0827, 80.2707</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Emergency Notification Dispatch Status Rows -->
+          <div class="dispatch-status-container">
+            <h4 class="dispatch-heading">Automated Emergency Notification Dispatch Status</h4>
+
+            <!-- Contact 1: Primary Emergency Contact (Family) -->
+            <div class="dispatch-row">
+              <div class="dispatch-icon icon-sms">📱</div>
+              <div class="dispatch-details">
+                <div class="dispatch-party">Primary Emergency Contact (Family) - +91 98765 43210</div>
+                <div class="dispatch-message-preview" id="sms-preview-family">
+                  "EMERGENCY ALERT: TN-09-CB-4092 met with an accident at Grand Southern Trunk Rd (13.0827N, 80.2707E). Impact: HIGH (8.4G). Ambulance notified. Maps: https://maps.google.com/?q=13.0827,80.2707"
+                </div>
+              </div>
+              <div class="dispatch-badge badge-sent" id="badge-sms-family">
+                <span class="dot-green"></span> SMS DELIVERED
+              </div>
+            </div>
+
+            <!-- Contact 2: 108 Emergency Ambulance Network -->
+            <div class="dispatch-row">
+              <div class="dispatch-icon icon-ambulance">🚑</div>
+              <div class="dispatch-details">
+                <div class="dispatch-party">Nearest Trauma Center &amp; 108 Ambulance Dispatch</div>
+                <div class="dispatch-message-preview">
+                  Apollo Emergency Care Center (Distance: 2.4 km) • Dispatched Unit #AMB-108-C • Estimated Arrival: <strong>6 mins</strong>
+                </div>
+              </div>
+              <div class="dispatch-badge badge-dispatching" id="badge-ambulance">
+                <span class="dot-amber"></span> UNIT DISPATCHED
+              </div>
+            </div>
+
+            <!-- Contact 3: Highway Patrol & Police Dispatch -->
+            <div class="dispatch-row">
+              <div class="dispatch-icon icon-police">🚓</div>
+              <div class="dispatch-details">
+                <div class="dispatch-party">State Highway Police Control Room (Dial 112 / 100)</div>
+                <div class="dispatch-message-preview">
+                  Highway Incident Ticket #INC-94821 registered • Traffic diversion advisory issued.
+                </div>
+              </div>
+              <div class="dispatch-badge badge-sent" id="badge-police">
+                <span class="dot-green"></span> POLICE ALERTED
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button id="btn-cancel-alert" class="btn btn-outline-danger">
+            Cancel Alert (False Alarm Test)
+          </button>
+          <button id="btn-confirm-emergency" class="btn btn-danger">
+            Confirm &amp; Call Ambulance Now
+          </button>
+          <button id="btn-close-modal" class="btn btn-secondary">
+            Close Panel &amp; Return to Telemetry
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- College Project Presentation Footer -->
+    <footer class="system-footer">
+      <div class="footer-left">
+        <span>College Mini Project: <strong>Vehicle Accident Detection and Alert System Using Sensors</strong></span>
+        <span class="footer-divider">•</span>
+        <span class="text-muted">Designed for Technical Demonstration &amp; Viva Evaluation</span>
+      </div>
+      <div class="footer-right">
+        <span class="badge-tech">HTML5 Canvas</span>
+        <span class="badge-tech">Web Audio Synth</span>
+        <span class="badge-tech">Sensor Fusion Algorithm</span>
+        <span class="badge-tech">Simulated IoT Pipeline</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/sensors.js"></script>
+  <script src="js/simulation.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/demoSequence.js"></script>
+</body>
+</html>

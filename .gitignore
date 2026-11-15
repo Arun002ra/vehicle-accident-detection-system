@@ -1,0 +1,6 @@
+.DS_Store
+Thumbs.db
+*.log
+.system_generated/
+edge_profile*/
+temp_profile*/
