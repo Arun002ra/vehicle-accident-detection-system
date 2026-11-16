@@ -950,6 +950,7 @@
     </section>
 
     <!-- SECTION 4: Circuit Connection Details (Interactive Logical Wiring Diagram) -->
+    <!-- SECTION 4: Circuit Connection Details (Interactive Logical Wiring Diagram) -->
     <section class="project-section" id="sec-circuit">
       <div class="section-card">
         <div class="section-header">
@@ -963,8 +964,28 @@
           </span>
         </div>
 
+        <!-- Quick Visual Classification Reference (Inputs vs MCU vs Outputs) -->
+        <div class="circuit-classification-legend">
+          <div class="c-legend-card legend-input-card">
+            <span class="c-legend-pill pill-input">📥 SENSOR INPUTS</span>
+            <p class="c-legend-desc"><strong>MPU-6050, SW-420, GPS, SOS Button:</strong> Real-time crash telemetry streamed <em>INTO</em> ESP32 input GPIOs.</p>
+          </div>
+          <div class="c-legend-card legend-mcu-card">
+            <span class="c-legend-pill pill-mcu">⚡ CENTRAL MCU</span>
+            <p class="c-legend-desc"><strong>ESP32 (Dual-Core 240MHz):</strong> Samples inputs at 100Hz, executes multi-sensor fusion, drives all peripherals.</p>
+          </div>
+          <div class="c-legend-card legend-output-card">
+            <span class="c-legend-pill pill-output">📤 ACTUATOR OUTPUTS</span>
+            <p class="c-legend-desc"><strong>Siren Buzzer &amp; Status LEDs:</strong> Audio alarm (880Hz) and visual indicators triggered <em>BY</em> ESP32 outputs.</p>
+          </div>
+          <div class="c-legend-card legend-comm-card">
+            <span class="c-legend-pill pill-comm">🟣 COMM I/O &amp; POWER</span>
+            <p class="c-legend-desc"><strong>SIM800L Modem &amp; LM2596:</strong> Cellular emergency transmission (SMS/HTTP) &amp; regulated 12V/5V power supply.</p>
+          </div>
+        </div>
+
         <div class="circuit-diagram-wrapper">
-          <svg viewBox="0 0 1160 510" class="circuit-svg" id="circuit-svg">
+          <svg viewBox="0 0 1160 550" class="circuit-svg" id="circuit-svg">
             <defs>
               <linearGradient id="grad-wire-i2c" x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0%" stop-color="#38bdf8"/>
@@ -991,186 +1012,243 @@
               </filter>
             </defs>
 
-            <!-- CONNECTION WIRES (PATHS WITH PRECISE ORTHOGONAL ROUTING) -->
-            <!-- 1. MPU-6050 to ESP32 -->
-            <path id="wire-mpu-vcc" d="M 230 65 L 340 65 L 340 70 L 435 70" class="wire-path wire-pwr"/>
-            <path id="wire-sda" d="M 230 90 L 360 90 L 360 95 L 435 95" class="wire-path wire-i2c"/>
-            <path id="wire-scl" d="M 230 115 L 380 115 L 380 120 L 435 120" class="wire-path wire-i2c"/>
+            <!-- ==========================================
+                 TOP CLASSIFICATION BANNERS (INPUTS vs MCU vs OUTPUTS)
+                 ========================================== -->
+            <!-- 1. LEFT: SENSOR INPUTS BANNER -->
+            <g transform="translate(40, 8)">
+              <rect width="200" height="28" rx="6" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
+              <circle cx="16" cy="14" r="5" fill="#10b981"/>
+              <text x="108" y="18.5" fill="#a7f3d0" font-family="'Inter', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">📥 SENSOR INPUT MODULES</text>
+            </g>
 
-            <!-- 2. SW-420 to ESP32 -->
-            <path id="wire-vibe-do" d="M 230 207 L 340 207 L 340 200 L 435 200" class="wire-path wire-alert"/>
-            <path id="wire-vibe-ao" d="M 230 233 L 360 233 L 360 230 L 435 230" class="wire-path wire-alert"/>
+            <!-- 2. CENTER: PROCESSING MCU BANNER -->
+            <g transform="translate(445, 8)">
+              <rect width="260" height="28" rx="6" fill="#0c4a6e" stroke="#38bdf8" stroke-width="1.5"/>
+              <circle cx="16" cy="14" r="5" fill="#38bdf8"/>
+              <text x="135" y="18.5" fill="#bae6fd" font-family="'Inter', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">⚡ CENTRAL CONTROLLER (ESP32)</text>
+            </g>
 
-            <!-- 3. NEO-6M GPS to ESP32 -->
-            <path id="wire-gps-tx" d="M 230 327 L 340 327 L 340 320 L 435 320" class="wire-path wire-uart"/>
-            <path id="wire-gps-rx" d="M 230 353 L 360 353 L 360 350 L 435 350" class="wire-path wire-uart"/>
+            <!-- 3. RIGHT: ACTUATOR OUTPUTS & COMM BANNER -->
+            <g transform="translate(900, 8)">
+              <rect width="210" height="28" rx="6" fill="#4c0519" stroke="#f43f5e" stroke-width="1.5"/>
+              <circle cx="16" cy="14" r="5" fill="#f43f5e"/>
+              <text x="110" y="18.5" fill="#fecdd3" font-family="'Inter', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">📤 ACTUATOR OUTPUTS &amp; COMM</text>
+            </g>
 
-            <!-- 4. SOS Button to ESP32 -->
-            <path id="wire-sos" d="M 230 440 L 380 440 L 380 425 L 435 425" class="wire-path wire-alert"/>
-
-            <!-- 5. ESP32 to SIM800L GSM -->
-            <path id="wire-gsm-tx" d="M 715 80 L 800 80 L 800 75 L 910 75" class="wire-path wire-uart"/>
-            <path id="wire-gsm-rx" d="M 715 110 L 820 110 L 820 105 L 910 105" class="wire-path wire-uart"/>
-
-            <!-- 6. ESP32 to Active Buzzer -->
-            <path id="wire-buzzer" d="M 715 213 L 910 213" class="wire-path wire-alert"/>
-
-            <!-- 7. ESP32 to Status LEDs -->
-            <path id="wire-led-green" d="M 715 325 L 910 325" class="wire-path wire-i2c"/>
-            <path id="wire-led-red" d="M 715 355 L 910 355" class="wire-path wire-pwr"/>
-
-            <!-- 8. LM2596 Power to ESP32 -->
-            <path id="wire-vin" d="M 715 445 L 910 445" class="wire-path wire-pwr"/>
+            <!-- SIGNAL FLOW DIRECTION LABELS ABOVE WIRES -->
+            <text x="335" y="44" fill="#059669" font-family="'Inter', sans-serif" font-size="9" font-weight="bold" text-anchor="middle">&rarr; SENSOR SIGNALS FLOW IN &rarr;</text>
+            <text x="815" y="44" fill="#e11d48" font-family="'Inter', sans-serif" font-size="9" font-weight="bold" text-anchor="middle">&rarr; CONTROL OUTPUTS FLOW OUT &rarr;</text>
 
             <!-- ==========================================
-                 LEFT MODULE BLOCKS
+                 CIRCUIT MODULES & WIRES (Y-TRANSLATED BY +25 FOR PERFECT SPACING)
                  ========================================== -->
-            <!-- 1. MPU-6050 Module -->
-            <g class="circuit-module" transform="translate(50, 40)">
-              <rect width="180" height="95" rx="6" fill="#0c1a2e" stroke="#0284c7" stroke-width="2"/>
-              <rect width="180" height="24" rx="6" fill="#0369a1"/>
-              <text x="90" y="16" fill="#fff" font-family="'Inter', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">MPU-6050 ACCEL/GYRO</text>
-              <text x="15" y="44" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5">VCC (3.3V)</text>
-              <text x="15" y="69" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5">SDA (I2C Data)</text>
-              <text x="15" y="94" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5">SCL (I2C Clock)</text>
-              <circle cx="180" cy="25" r="5" fill="#ef4444" class="circuit-pin" data-wire="wire-mpu-vcc"/>
-              <circle cx="180" cy="50" r="5" fill="#38bdf8" class="circuit-pin" data-wire="wire-sda"/>
-              <circle cx="180" cy="75" r="5" fill="#38bdf8" class="circuit-pin" data-wire="wire-scl"/>
-            </g>
+            <g id="circuit-contents" transform="translate(0, 25)">
+              <!-- CONNECTION WIRES (PATHS WITH PRECISE ORTHOGONAL ROUTING) -->
+              <!-- 1. MPU-6050 to ESP32 -->
+              <path id="wire-mpu-vcc" d="M 230 65 L 340 65 L 340 70 L 435 70" class="wire-path wire-pwr"/>
+              <path id="wire-sda" d="M 230 90 L 360 90 L 360 95 L 435 95" class="wire-path wire-i2c"/>
+              <path id="wire-scl" d="M 230 115 L 380 115 L 380 120 L 435 120" class="wire-path wire-i2c"/>
 
-            <!-- 2. SW-420 Module -->
-            <g class="circuit-module" transform="translate(50, 175)">
-              <rect width="180" height="80" rx="6" fill="#1c1917" stroke="#d97706" stroke-width="2"/>
-              <rect width="180" height="24" rx="6" fill="#b45309"/>
-              <text x="90" y="16" fill="#fff" font-family="'Inter', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">SW-420 PIEZO SENSOR</text>
-              <text x="15" y="46" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5">DO (Shock Trigger)</text>
-              <text x="15" y="72" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5">AO (Analog Peak)</text>
-              <circle cx="180" cy="32" r="5" fill="#f59e0b" class="circuit-pin" data-wire="wire-vibe-do"/>
-              <circle cx="180" cy="58" r="5" fill="#f59e0b" class="circuit-pin" data-wire="wire-vibe-ao"/>
-            </g>
+              <!-- 2. SW-420 to ESP32 -->
+              <path id="wire-vibe-do" d="M 230 207 L 340 207 L 340 200 L 435 200" class="wire-path wire-alert"/>
+              <path id="wire-vibe-ao" d="M 230 233 L 360 233 L 360 230 L 435 230" class="wire-path wire-alert"/>
 
-            <!-- 3. NEO-6M GPS Module -->
-            <g class="circuit-module" transform="translate(50, 295)">
-              <rect width="180" height="80" rx="6" fill="#062e1e" stroke="#059669" stroke-width="2"/>
-              <rect width="180" height="24" rx="6" fill="#047857"/>
-              <text x="90" y="16" fill="#fff" font-family="'Inter', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">NEO-6M GPS RECEIVER</text>
-              <text x="15" y="46" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5">TX (NMEA Data)</text>
-              <text x="15" y="72" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5">RX (Config)</text>
-              <circle cx="180" cy="32" r="5" fill="#34d399" class="circuit-pin" data-wire="wire-gps-tx"/>
-              <circle cx="180" cy="58" r="5" fill="#34d399" class="circuit-pin" data-wire="wire-gps-rx"/>
-            </g>
+              <!-- 3. NEO-6M GPS to ESP32 -->
+              <path id="wire-gps-tx" d="M 230 327 L 340 327 L 340 320 L 435 320" class="wire-path wire-uart"/>
+              <path id="wire-gps-rx" d="M 230 353 L 360 353 L 360 350 L 435 350" class="wire-path wire-uart"/>
 
-            <!-- 4. SOS Push Button -->
-            <g class="circuit-module" transform="translate(50, 415)">
-              <rect width="180" height="50" rx="6" fill="#2d0606" stroke="#dc2626" stroke-width="2"/>
-              <text x="90" y="30" fill="#fecaca" font-family="'Inter', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">🆘 SOS PANIC BUTTON</text>
-              <circle cx="180" cy="25" r="5" fill="#ef4444" class="circuit-pin" data-wire="wire-sos"/>
-            </g>
+              <!-- 4. SOS Button to ESP32 -->
+              <path id="wire-sos" d="M 230 440 L 380 440 L 380 425 L 435 425" class="wire-path wire-alert"/>
 
-            <!-- ==========================================
-                 CENTRAL CONTROLLER: ESP32 PINOUT BOARD
-                 (Clean proportions, zero text overlap)
-                 ========================================== -->
-            <g class="circuit-module circuit-mcu-center" transform="translate(435, 35)">
-              <!-- Outer Board Body -->
-              <rect width="280" height="440" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="2.5" filter="url(#glow-effect)"/>
-              
-              <!-- Header Bar -->
-              <rect width="280" height="34" rx="10" fill="#0284c7"/>
-              <text x="140" y="23" fill="#fff" font-family="'Inter', sans-serif" font-size="13" font-weight="bold" text-anchor="middle">ESP32 DevKit V1</text>
-              
-              <!-- Left Pins (Inputs) -->
-              <circle cx="0" cy="35" r="4.5" fill="#ef4444" stroke="#0f172a" stroke-width="1.5"/>
-              <text x="12" y="39" fill="#f87171" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">3V3 &bull;</text>
+              <!-- 5. ESP32 to SIM800L GSM -->
+              <path id="wire-gsm-tx" d="M 715 80 L 800 80 L 800 75 L 910 75" class="wire-path wire-uart"/>
+              <path id="wire-gsm-rx" d="M 715 110 L 820 110 L 820 105 L 910 105" class="wire-path wire-uart"/>
 
-              <circle cx="0" cy="60" r="4.5" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
-              <text x="12" y="64" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">D21 (SDA) &bull;</text>
+              <!-- 6. ESP32 to Active Buzzer -->
+              <path id="wire-buzzer" d="M 715 213 L 910 213" class="wire-path wire-alert"/>
 
-              <circle cx="0" cy="85" r="4.5" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
-              <text x="12" y="89" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">D22 (SCL) &bull;</text>
+              <!-- 7. ESP32 to Status LEDs -->
+              <path id="wire-led-green" d="M 715 325 L 910 325" class="wire-path wire-i2c"/>
+              <path id="wire-led-red" d="M 715 355 L 910 355" class="wire-path wire-pwr"/>
 
-              <circle cx="0" cy="165" r="4.5" fill="#f59e0b" stroke="#0f172a" stroke-width="1.5"/>
-              <text x="12" y="169" fill="#f59e0b" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">D4 (DO) &bull;</text>
+              <!-- 8. LM2596 Power to ESP32 -->
+              <path id="wire-vin" d="M 715 445 L 910 445" class="wire-path wire-pwr"/>
 
-              <circle cx="0" cy="195" r="4.5" fill="#f59e0b" stroke="#0f172a" stroke-width="1.5"/>
-              <text x="12" y="199" fill="#f59e0b" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">D34 (AO) &bull;</text>
+              <!-- ==========================================
+                   LEFT MODULE BLOCKS (SENSOR INPUTS)
+                   ========================================== -->
+              <!-- 1. MPU-6050 Module -->
+              <g class="circuit-module" transform="translate(50, 40)">
+                <rect width="180" height="95" rx="6" fill="#0c1a2e" stroke="#0284c7" stroke-width="2"/>
+                <rect width="180" height="26" rx="6" fill="#0369a1"/>
+                <text x="10" y="17" fill="#fff" font-family="'Inter', sans-serif" font-size="10" font-weight="bold">MPU-6050 ACCEL</text>
+                <rect x="116" y="5" width="58" height="16" rx="3" fill="#10b981"/>
+                <text x="145" y="16.5" fill="#022c22" font-family="'Inter', sans-serif" font-size="7.5" font-weight="bold" text-anchor="middle">INPUT</text>
+                <text x="15" y="44" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5">VCC (3.3V Power)</text>
+                <text x="15" y="69" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5">SDA (I2C Data &rarr;)</text>
+                <text x="15" y="94" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5">SCL (I2C Clock &larr;)</text>
+                <circle cx="180" cy="25" r="5" fill="#ef4444" class="circuit-pin" data-wire="wire-mpu-vcc"/>
+                <circle cx="180" cy="50" r="5" fill="#38bdf8" class="circuit-pin" data-wire="wire-sda"/>
+                <circle cx="180" cy="75" r="5" fill="#38bdf8" class="circuit-pin" data-wire="wire-scl"/>
+              </g>
 
-              <circle cx="0" cy="285" r="4.5" fill="#c084fc" stroke="#0f172a" stroke-width="1.5"/>
-              <text x="12" y="289" fill="#c084fc" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">D16 (RX2) &bull;</text>
+              <!-- 2. SW-420 Module -->
+              <g class="circuit-module" transform="translate(50, 175)">
+                <rect width="180" height="80" rx="6" fill="#1c1917" stroke="#d97706" stroke-width="2"/>
+                <rect width="180" height="26" rx="6" fill="#b45309"/>
+                <text x="10" y="17" fill="#fff" font-family="'Inter', sans-serif" font-size="10" font-weight="bold">SW-420 PIEZO SHOCK</text>
+                <rect x="116" y="5" width="58" height="16" rx="3" fill="#10b981"/>
+                <text x="145" y="16.5" fill="#022c22" font-family="'Inter', sans-serif" font-size="7.5" font-weight="bold" text-anchor="middle">INPUT</text>
+                <text x="15" y="46" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5">DO (Shock Trigger &rarr;)</text>
+                <text x="15" y="72" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5">AO (Analog Peak &rarr;)</text>
+                <circle cx="180" cy="32" r="5" fill="#f59e0b" class="circuit-pin" data-wire="wire-vibe-do"/>
+                <circle cx="180" cy="58" r="5" fill="#f59e0b" class="circuit-pin" data-wire="wire-vibe-ao"/>
+              </g>
 
-              <circle cx="0" cy="315" r="4.5" fill="#c084fc" stroke="#0f172a" stroke-width="1.5"/>
-              <text x="12" y="319" fill="#c084fc" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">D17 (TX2) &bull;</text>
+              <!-- 3. NEO-6M GPS Module -->
+              <g class="circuit-module" transform="translate(50, 295)">
+                <rect width="180" height="80" rx="6" fill="#062e1e" stroke="#059669" stroke-width="2"/>
+                <rect width="180" height="26" rx="6" fill="#047857"/>
+                <text x="10" y="17" fill="#fff" font-family="'Inter', sans-serif" font-size="10" font-weight="bold">NEO-6M GPS UNIT</text>
+                <rect x="116" y="5" width="58" height="16" rx="3" fill="#10b981"/>
+                <text x="145" y="16.5" fill="#022c22" font-family="'Inter', sans-serif" font-size="7.5" font-weight="bold" text-anchor="middle">INPUT</text>
+                <text x="15" y="46" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5">TX (NMEA Data &rarr;)</text>
+                <text x="15" y="72" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5">RX (Config In &larr;)</text>
+                <circle cx="180" cy="32" r="5" fill="#34d399" class="circuit-pin" data-wire="wire-gps-tx"/>
+                <circle cx="180" cy="58" r="5" fill="#34d399" class="circuit-pin" data-wire="wire-gps-rx"/>
+              </g>
 
-              <circle cx="0" cy="390" r="4.5" fill="#ef4444" stroke="#0f172a" stroke-width="1.5"/>
-              <text x="12" y="394" fill="#f87171" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">D32 (SOS) &bull;</text>
+              <!-- 4. SOS Push Button -->
+              <g class="circuit-module" transform="translate(50, 415)">
+                <rect width="180" height="50" rx="6" fill="#2d0606" stroke="#dc2626" stroke-width="2"/>
+                <text x="10" y="22" fill="#fecaca" font-family="'Inter', sans-serif" font-size="10" font-weight="bold">🆘 SOS PANIC BUTTON</text>
+                <rect x="116" y="8" width="58" height="16" rx="3" fill="#10b981"/>
+                <text x="145" y="19.5" fill="#022c22" font-family="'Inter', sans-serif" font-size="7.5" font-weight="bold" text-anchor="middle">INPUT</text>
+                <text x="12" y="40" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8.5">Manual Alert &rarr; GPIO 32</text>
+                <circle cx="180" cy="25" r="5" fill="#ef4444" class="circuit-pin" data-wire="wire-sos"/>
+              </g>
 
-              <circle cx="0" cy="415" r="4.5" fill="#64748b" stroke="#0f172a" stroke-width="1.5"/>
-              <text x="12" y="419" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">GND &bull;</text>
+              <!-- ==========================================
+                   CENTRAL CONTROLLER: ESP32 PINOUT BOARD
+                   ========================================== -->
+              <g class="circuit-module circuit-mcu-center" transform="translate(435, 35)">
+                <!-- Outer Board Body -->
+                <rect width="280" height="440" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="2.5" filter="url(#glow-effect)"/>
+                
+                <!-- Header Bar -->
+                <rect width="280" height="36" rx="10" fill="#0284c7"/>
+                <text x="140" y="16" fill="#fff" font-family="'Inter', sans-serif" font-size="11.5" font-weight="bold" text-anchor="middle">ESP32 DevKit V1 (Main Controller)</text>
+                <text x="14" y="29" fill="#a7f3d0" font-family="'Inter', sans-serif" font-size="8" font-weight="bold">&larr; SENSOR INPUTS</text>
+                <text x="266" y="29" fill="#fbcfe8" font-family="'Inter', sans-serif" font-size="8" font-weight="bold" text-anchor="end">ACTUATORS &amp; COMM &rarr;</text>
+                
+                <!-- Left Pins (Sensor Inputs & Power Out) -->
+                <circle cx="0" cy="35" r="4.5" fill="#ef4444" stroke="#0f172a" stroke-width="1.5"/>
+                <text x="12" y="39" fill="#f87171" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">3V3 &bull;</text>
 
-              <!-- Central Metal Shield Chip (Positioned with clean margins, zero text collisions) -->
-              <rect x="95" y="160" width="90" height="85" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
-              <text x="140" y="200" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="8.5" text-anchor="middle" font-weight="bold">ESP-WROOM-32</text>
-              <text x="140" y="218" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="7.5" text-anchor="middle">240MHz Dual-Core</text>
+                <circle cx="0" cy="60" r="4.5" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
+                <text x="12" y="64" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">D21 (I2C SDA) &bull;</text>
 
-              <!-- Right Pins (Outputs & Power) -->
-              <circle cx="280" cy="45" r="4.5" fill="#c084fc" stroke="#0f172a" stroke-width="1.5"/>
-              <text x="268" y="49" fill="#c084fc" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" text-anchor="end">&bull; D27 (TX1)</text>
+                <circle cx="0" cy="85" r="4.5" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
+                <text x="12" y="89" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">D22 (I2C SCL) &bull;</text>
 
-              <circle cx="280" cy="75" r="4.5" fill="#c084fc" stroke="#0f172a" stroke-width="1.5"/>
-              <text x="268" y="79" fill="#c084fc" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" text-anchor="end">&bull; D26 (RX1)</text>
+                <circle cx="0" cy="165" r="4.5" fill="#f59e0b" stroke="#0f172a" stroke-width="1.5"/>
+                <text x="12" y="169" fill="#f59e0b" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">D4 (Shock DO) &bull;</text>
 
-              <circle cx="280" cy="178" r="4.5" fill="#f59e0b" stroke="#0f172a" stroke-width="1.5"/>
-              <text x="268" y="182" fill="#f59e0b" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" text-anchor="end">&bull; D25 (Buzzer)</text>
+                <circle cx="0" cy="195" r="4.5" fill="#f59e0b" stroke="#0f172a" stroke-width="1.5"/>
+                <text x="12" y="199" fill="#f59e0b" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">D34 (Shock AO) &bull;</text>
 
-              <circle cx="280" cy="290" r="4.5" fill="#34d399" stroke="#0f172a" stroke-width="1.5"/>
-              <text x="268" y="294" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" text-anchor="end">&bull; D18 (LED-G)</text>
+                <circle cx="0" cy="285" r="4.5" fill="#c084fc" stroke="#0f172a" stroke-width="1.5"/>
+                <text x="12" y="289" fill="#c084fc" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">D16 (GPS RX2) &bull;</text>
 
-              <circle cx="280" cy="320" r="4.5" fill="#ef4444" stroke="#0f172a" stroke-width="1.5"/>
-              <text x="268" y="324" fill="#f87171" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" text-anchor="end">&bull; D5 (LED-R)</text>
+                <circle cx="0" cy="315" r="4.5" fill="#c084fc" stroke="#0f172a" stroke-width="1.5"/>
+                <text x="12" y="319" fill="#c084fc" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">D17 (GPS TX2) &bull;</text>
 
-              <circle cx="280" cy="410" r="4.5" fill="#ef4444" stroke="#0f172a" stroke-width="1.5"/>
-              <text x="268" y="414" fill="#f87171" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" text-anchor="end">&bull; VIN (5V In)</text>
-            </g>
+                <circle cx="0" cy="390" r="4.5" fill="#ef4444" stroke="#0f172a" stroke-width="1.5"/>
+                <text x="12" y="394" fill="#f87171" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">D32 (SOS Button) &bull;</text>
 
-            <!-- ==========================================
-                 RIGHT MODULE BLOCKS
-                 ========================================== -->
-            <!-- 5. SIM800L GSM Module -->
-            <g class="circuit-module" transform="translate(910, 40)">
-              <rect width="190" height="95" rx="6" fill="#2d061c" stroke="#db2777" stroke-width="2"/>
-              <rect width="190" height="24" rx="6" fill="#be185d"/>
-              <text x="95" y="16" fill="#fff" font-family="'Inter', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">SIM800L GSM MODEM</text>
-              <text x="175" y="50" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5" text-anchor="end">RXD (AT Commands)</text>
-              <text x="175" y="80" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5" text-anchor="end">TXD (Responses)</text>
-              <circle cx="0" cy="35" r="5" fill="#f472b6" class="circuit-pin" data-wire="wire-gsm-tx"/>
-              <circle cx="0" cy="65" r="5" fill="#f472b6" class="circuit-pin" data-wire="wire-gsm-rx"/>
-            </g>
+                <circle cx="0" cy="415" r="4.5" fill="#64748b" stroke="#0f172a" stroke-width="1.5"/>
+                <text x="12" y="419" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold">GND (Common) &bull;</text>
 
-            <!-- 6. Active Buzzer -->
-            <g class="circuit-module" transform="translate(910, 175)">
-              <rect width="190" height="75" rx="6" fill="#261010" stroke="#ef4444" stroke-width="2"/>
-              <rect width="190" height="24" rx="6" fill="#b91c1c"/>
-              <text x="95" y="16" fill="#fff" font-family="'Inter', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">ACTIVE SIREN BUZZER</text>
-              <text x="175" y="55" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5" text-anchor="end">Signal (+) &bull; 880Hz</text>
-              <circle cx="0" cy="38" r="5" fill="#f87171" class="circuit-pin" data-wire="wire-buzzer"/>
-            </g>
+                <!-- Central Metal Shield Chip (Positioned with clean margins, zero collisions) -->
+                <rect x="95" y="160" width="90" height="92" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+                <rect x="99" y="165" width="82" height="15" rx="3" fill="#0369a1" opacity="0.6"/>
+                <text x="140" y="176" fill="#7dd3fc" font-family="'Inter', sans-serif" font-size="7.5" text-anchor="middle" font-weight="bold">PROCESSING CORE</text>
+                <text x="140" y="196" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="8.5" text-anchor="middle" font-weight="bold">ESP-WROOM-32</text>
+                <text x="140" y="212" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="7.5" text-anchor="middle">240MHz Dual-Core</text>
+                <text x="140" y="228" fill="#34d399" font-family="'Inter', sans-serif" font-size="7.5" text-anchor="middle">Multi-Sensor Fusion</text>
+                <text x="140" y="243" fill="#fbcfe8" font-family="'Inter', sans-serif" font-size="7" text-anchor="middle">Threshold Engine</text>
 
-            <!-- 7. LED Indicators -->
-            <g class="circuit-module" transform="translate(910, 290)">
-              <rect width="190" height="90" rx="6" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
-              <rect width="190" height="24" rx="6" fill="#334155"/>
-              <text x="95" y="16" fill="#fff" font-family="'Inter', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">TELEMETRY LEDS</text>
-              <text x="175" y="50" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="9.5" text-anchor="end">Green LED (Normal)</text>
-              <text x="175" y="80" fill="#f87171" font-family="'JetBrains Mono', monospace" font-size="9.5" text-anchor="end">Red LED (Alert)</text>
-              <circle cx="0" cy="35" r="5" fill="#34d399" class="circuit-pin" data-wire="wire-led-green"/>
-              <circle cx="0" cy="65" r="5" fill="#ef4444" class="circuit-pin" data-wire="wire-led-red"/>
-            </g>
+                <!-- Right Pins (Outputs & Power) -->
+                <circle cx="280" cy="45" r="4.5" fill="#c084fc" stroke="#0f172a" stroke-width="1.5"/>
+                <text x="268" y="49" fill="#c084fc" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" text-anchor="end">&bull; D27 (GSM TX1)</text>
 
-            <!-- 8. LM2596 Power Supply -->
-            <g class="circuit-module" transform="translate(910, 420)">
-              <rect width="190" height="50" rx="6" fill="#0f2136" stroke="#0284c7" stroke-width="2"/>
-              <text x="95" y="30" fill="#7dd3fc" font-family="'Inter', sans-serif" font-size="11" font-weight="bold" text-anchor="middle">⚡ 12V &rarr; 5V REGULATOR</text>
-              <circle cx="0" cy="25" r="5" fill="#ef4444" class="circuit-pin" data-wire="wire-vin"/>
+                <circle cx="280" cy="75" r="4.5" fill="#c084fc" stroke="#0f172a" stroke-width="1.5"/>
+                <text x="268" y="79" fill="#c084fc" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" text-anchor="end">&bull; D26 (GSM RX1)</text>
+
+                <circle cx="280" cy="178" r="4.5" fill="#f59e0b" stroke="#0f172a" stroke-width="1.5"/>
+                <text x="268" y="182" fill="#f59e0b" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" text-anchor="end">&bull; D25 (Buzzer)</text>
+
+                <circle cx="280" cy="290" r="4.5" fill="#34d399" stroke="#0f172a" stroke-width="1.5"/>
+                <text x="268" y="294" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" text-anchor="end">&bull; D18 (LED-G)</text>
+
+                <circle cx="280" cy="320" r="4.5" fill="#ef4444" stroke="#0f172a" stroke-width="1.5"/>
+                <text x="268" y="324" fill="#f87171" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" text-anchor="end">&bull; D5 (LED-R)</text>
+
+                <circle cx="280" cy="410" r="4.5" fill="#ef4444" stroke="#0f172a" stroke-width="1.5"/>
+                <text x="268" y="414" fill="#f87171" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" text-anchor="end">&bull; VIN (5V DC In)</text>
+              </g>
+
+              <!-- ==========================================
+                   RIGHT MODULE BLOCKS (OUTPUTS, COMM & POWER)
+                   ========================================== -->
+              <!-- 5. SIM800L GSM Module -->
+              <g class="circuit-module" transform="translate(910, 40)">
+                <rect width="190" height="95" rx="6" fill="#2d061c" stroke="#db2777" stroke-width="2"/>
+                <rect width="190" height="26" rx="6" fill="#be185d"/>
+                <rect x="8" y="5" width="60" height="16" rx="3" fill="#c084fc"/>
+                <text x="38" y="16.5" fill="#3b0764" font-family="'Inter', sans-serif" font-size="7.5" font-weight="bold" text-anchor="middle">COMM I/O</text>
+                <text x="74" y="17" fill="#fff" font-family="'Inter', sans-serif" font-size="10" font-weight="bold">SIM800L GSM MODEM</text>
+                <text x="175" y="50" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5" text-anchor="end">RXD (&larr; AT Commands)</text>
+                <text x="175" y="80" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5" text-anchor="end">TXD (Responses &rarr;)</text>
+                <circle cx="0" cy="35" r="5" fill="#f472b6" class="circuit-pin" data-wire="wire-gsm-tx"/>
+                <circle cx="0" cy="65" r="5" fill="#f472b6" class="circuit-pin" data-wire="wire-gsm-rx"/>
+              </g>
+
+              <!-- 6. Active Buzzer -->
+              <g class="circuit-module" transform="translate(910, 175)">
+                <rect width="190" height="75" rx="6" fill="#261010" stroke="#ef4444" stroke-width="2"/>
+                <rect width="190" height="26" rx="6" fill="#b91c1c"/>
+                <rect x="8" y="5" width="56" height="16" rx="3" fill="#f87171"/>
+                <text x="36" y="16.5" fill="#450a0a" font-family="'Inter', sans-serif" font-size="7.5" font-weight="bold" text-anchor="middle">OUTPUT</text>
+                <text x="70" y="17" fill="#fff" font-family="'Inter', sans-serif" font-size="10" font-weight="bold">ACTIVE SIREN BUZZER</text>
+                <text x="175" y="55" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9.5" text-anchor="end">Audio Alarm &larr; D25</text>
+                <circle cx="0" cy="38" r="5" fill="#f87171" class="circuit-pin" data-wire="wire-buzzer"/>
+              </g>
+
+              <!-- 7. LED Indicators -->
+              <g class="circuit-module" transform="translate(910, 290)">
+                <rect width="190" height="90" rx="6" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+                <rect width="190" height="26" rx="6" fill="#334155"/>
+                <rect x="8" y="5" width="56" height="16" rx="3" fill="#f87171"/>
+                <text x="36" y="16.5" fill="#450a0a" font-family="'Inter', sans-serif" font-size="7.5" font-weight="bold" text-anchor="middle">OUTPUT</text>
+                <text x="70" y="17" fill="#fff" font-family="'Inter', sans-serif" font-size="10" font-weight="bold">TELEMETRY LEDS</text>
+                <text x="175" y="50" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="9.5" text-anchor="end">Green LED (Safe &larr; D18)</text>
+                <text x="175" y="80" fill="#f87171" font-family="'JetBrains Mono', monospace" font-size="9.5" text-anchor="end">Red LED (Alert &larr; D5)</text>
+                <circle cx="0" cy="35" r="5" fill="#34d399" class="circuit-pin" data-wire="wire-led-green"/>
+                <circle cx="0" cy="65" r="5" fill="#ef4444" class="circuit-pin" data-wire="wire-led-red"/>
+              </g>
+
+              <!-- 8. LM2596 Power Supply -->
+              <g class="circuit-module" transform="translate(910, 420)">
+                <rect width="190" height="50" rx="6" fill="#0f2136" stroke="#0284c7" stroke-width="2"/>
+                <rect width="190" height="24" rx="6" fill="#0369a1"/>
+                <rect x="8" y="4" width="56" height="16" rx="3" fill="#38bdf8"/>
+                <text x="36" y="15.5" fill="#082f49" font-family="'Inter', sans-serif" font-size="7.5" font-weight="bold" text-anchor="middle">POWER</text>
+                <text x="70" y="16" fill="#7dd3fc" font-family="'Inter', sans-serif" font-size="10" font-weight="bold">12V &rarr; 5V REGULATOR</text>
+                <text x="175" y="38" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="end">5V Supply &rarr; ESP32 VIN</text>
+                <circle cx="0" cy="25" r="5" fill="#ef4444" class="circuit-pin" data-wire="wire-vin"/>
+              </g>
             </g>
           </svg>
         </div>

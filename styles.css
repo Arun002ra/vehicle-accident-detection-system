@@ -1880,6 +1880,105 @@ body {
 /* ==========================================================================
    4. Circuit Connection Details (Interactive Logical Wiring Diagram)
    ========================================================================== */
+/* ==========================================================================
+   Circuit Connection Details Classification Legend & Badges
+   ========================================================================== */
+.circuit-classification-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.c-legend-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.c-legend-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.legend-input-card {
+  border-left: 4px solid #10b981;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, #ffffff 100%);
+}
+
+.legend-mcu-card {
+  border-left: 4px solid #0284c7;
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.05) 0%, #ffffff 100%);
+}
+
+.legend-output-card {
+  border-left: 4px solid #ef4444;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, #ffffff 100%);
+}
+
+.legend-comm-card {
+  border-left: 4px solid #a855f7;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.05) 0%, #ffffff 100%);
+}
+
+.c-legend-pill {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.pill-input {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.pill-mcu {
+  background: #f0f9ff;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+.pill-output {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.pill-comm {
+  background: #faf5ff;
+  color: #6b21a8;
+  border: 1px solid #e9d5ff;
+}
+
+.c-legend-desc {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #475569;
+  margin: 0;
+}
+
+.c-legend-desc strong {
+  color: #0f172a;
+}
+
+.c-legend-desc em {
+  font-weight: 600;
+  color: #0284c7;
+  font-style: normal;
+}
+
 .circuit-diagram-wrapper {
   background: #ffffff;
   border: 1.5px solid #e2e8f0;
