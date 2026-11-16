@@ -205,71 +205,59 @@ class ProjectSectionsManager {
 
   updateArchitectureBlocks(stateName, details) {
     const isAccident = (stateName === 'impact' || stateName === 'accident_confirmed' || stateName === 'manual_sos');
+    const isCancelled = (stateName === 'cancelled');
 
-    const blockMcu = document.getElementById('arch-block-mcu');
-    const blockSensors = document.getElementById('arch-block-sensors');
-    const blockGsm = document.getElementById('arch-block-gsm');
-    const blockBuzzer = document.getElementById('arch-block-buzzer');
-    const blockServices = document.getElementById('arch-block-services');
-
-    if (blockMcu) {
-      if (isAccident) {
-        blockMcu.classList.add('arch-block-alert');
-        const st = document.getElementById('arch-status-mcu');
-        if (st) st.textContent = 'COLLISION CONFIRMED';
-      } else {
-        blockMcu.classList.remove('arch-block-alert');
-        const st = document.getElementById('arch-status-mcu');
-        if (st) st.textContent = 'ACTIVE (100Hz)';
+    const setNodeState = (nodeId, statusId, isAlert, text) => {
+      const node = document.getElementById(nodeId);
+      const st = document.getElementById(statusId);
+      if (node) {
+        if (isAlert) node.classList.add('node-alert');
+        else node.classList.remove('node-alert');
       }
-    }
-
-    if (blockSensors) {
-      if (isAccident) {
-        blockSensors.classList.add('arch-block-alert');
-        const st = document.getElementById('arch-status-sensors');
-        if (st) st.textContent = 'THRESHOLD BREACHED';
-      } else {
-        blockSensors.classList.remove('arch-block-alert');
-        const st = document.getElementById('arch-status-sensors');
-        if (st) st.textContent = 'SAMPLING OK';
+      if (st && text) {
+        st.textContent = text;
       }
-    }
+    };
 
-    if (blockGsm) {
-      if (isAccident) {
-        blockGsm.classList.add('arch-block-alert');
-        const st = document.getElementById('arch-status-gsm');
-        if (st) st.textContent = 'TRANSMITTING SMS';
-      } else {
-        blockGsm.classList.remove('arch-block-alert');
-        const st = document.getElementById('arch-status-gsm');
-        if (st) st.textContent = 'NETWORK STANDBY';
-      }
-    }
+    if (isAccident) {
+      setNodeState('node-mcu', 'arch-status-mcu', true, 'COLLISION CONFIRMED');
+      setNodeState('node-mpu', 'arch-status-mpu', true, 'IMPACT SPIKE (8.4G)');
+      setNodeState('node-vibe', 'arch-status-vibe', true, 'SHOCK TRIGGER (96%)');
+      setNodeState('node-gps', 'arch-status-gps', false, 'COORDS LOCKED (13.0827°N)');
+      setNodeState('node-gsm', 'arch-status-gsm', true, 'SMS TRANSMITTED OK');
+      setNodeState('node-network', 'arch-status-network', true, 'DISPATCH INITIATED (108)');
+      setNodeState('node-buzzer', 'arch-status-buzzer', true, 'SIREN ACTIVE (880Hz)');
+      setNodeState('node-leds', 'arch-status-leds', true, 'G: OFF • R: FLASHING');
+      setNodeState('node-sos', 'arch-status-sos', stateName === 'manual_sos', stateName === 'manual_sos' ? 'PANIC OVERRIDE!' : 'ARMED (PULLUP)');
+      
+      // Highlight signal bus lines
+      document.querySelectorAll('.arch-wire').forEach(w => w.classList.add('wire-alert'));
+    } else if (isCancelled) {
+      setNodeState('node-mcu', 'arch-status-mcu', false, 'CANCELLED (STANDBY)');
+      setNodeState('node-mpu', 'arch-status-mpu', false, 'NORMAL (1.0G)');
+      setNodeState('node-vibe', 'arch-status-vibe', false, 'NORMAL (14%)');
+      setNodeState('node-gps', 'arch-status-gps', false, '3D FIX (9 SATS)');
+      setNodeState('node-gsm', 'arch-status-gsm', false, 'TRANSMISSION HALTED');
+      setNodeState('node-network', 'arch-status-network', false, 'STANDBY (NO ALARM)');
+      setNodeState('node-buzzer', 'arch-status-buzzer', false, 'MUTED (OFF)');
+      setNodeState('node-leds', 'arch-status-leds', false, 'G: ON • R: OFF');
+      setNodeState('node-sos', 'arch-status-sos', false, 'ARMED (PULLUP)');
 
-    if (blockBuzzer) {
-      if (isAccident) {
-        blockBuzzer.classList.add('arch-block-alert');
-        const st = document.getElementById('arch-status-buzzer');
-        if (st) st.textContent = 'SIREN SOUNDING';
-      } else {
-        blockBuzzer.classList.remove('arch-block-alert');
-        const st = document.getElementById('arch-status-buzzer');
-        if (st) st.textContent = 'STANDBY';
-      }
-    }
+      document.querySelectorAll('.arch-wire').forEach(w => w.classList.remove('wire-alert'));
+    } else {
+      // Normal cruising or idle
+      setNodeState('node-mcu', 'arch-status-mcu', false, 'ARMED / MONITORING');
+      setNodeState('node-mpu', 'arch-status-mpu', false, 'NORMAL (1.0G)');
+      setNodeState('node-vibe', 'arch-status-vibe', false, 'NORMAL (14%)');
+      setNodeState('node-gps', 'arch-status-gps', false, '3D FIX (9 SATS)');
+      setNodeState('node-gsm', 'arch-status-gsm', false, 'SIM800L READY');
+      setNodeState('node-network', 'arch-status-network', false, 'STANDBY');
+      setNodeState('node-buzzer', 'arch-status-buzzer', false, 'OFF');
+      setNodeState('node-leds', 'arch-status-leds', false, 'G: ON • R: OFF');
+      setNodeState('node-sos', 'arch-status-sos', false, 'ARMED (PULLUP)');
+      setNodeState('node-power', 'arch-status-power', false, '12V / 5V ACTIVE');
 
-    if (blockServices) {
-      if (isAccident) {
-        blockServices.classList.add('arch-block-alert');
-        const st = document.getElementById('arch-status-services');
-        if (st) st.textContent = 'DISPATCH INITIATED';
-      } else {
-        blockServices.classList.remove('arch-block-alert');
-        const st = document.getElementById('arch-status-services');
-        if (st) st.textContent = 'MONITORING';
-      }
+      document.querySelectorAll('.arch-wire').forEach(w => w.classList.remove('wire-alert'));
     }
   }
 
