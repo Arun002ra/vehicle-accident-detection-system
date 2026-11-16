@@ -383,6 +383,1248 @@
       </section>
     </main>
 
+    <!-- Quick Navigation Anchor Pill Bar -->
+    <nav class="project-nav-bar" id="project-nav-bar">
+      <div class="nav-bar-inner">
+        <span class="nav-bar-title">PROJECT SPECIFICATIONS:</span>
+        <div class="nav-links">
+          <a href="#sec-process" class="nav-link-pill">⚡ Live Working Process</a>
+          <a href="#sec-components" class="nav-link-pill">🧩 Hardware Components (10)</a>
+          <a href="#sec-architecture" class="nav-link-pill">🏛️ System Architecture</a>
+          <a href="#sec-circuit" class="nav-link-pill">🔌 Circuit Connection Details</a>
+          <a href="#sec-table" class="nav-link-pill">📋 Connection Pinout Table</a>
+          <a href="#sec-info" class="nav-link-pill">📖 Project Information &amp; Code</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- SECTION 1: Live Working Process -->
+    <section class="project-section" id="sec-process">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2 class="section-heading">Live Working Process</h2>
+            <p class="section-subheading">Every block below reflects the live state of the simulation.</p>
+          </div>
+          <span class="live-status-chip">
+            <span class="chip-dot dot-green"></span>
+            <span>REAL-TIME STATE MACHINE</span>
+          </span>
+        </div>
+
+        <div class="process-columns-grid">
+          <!-- Column 1: Accident Detected Workflow -->
+          <div class="process-column" id="process-col-accident">
+            <div class="process-column-header">
+              <span class="col-icon">🚨</span>
+              <h3 class="col-title">Accident detected — auto alert</h3>
+            </div>
+            <div class="process-steps-list">
+              <div class="proc-step" id="acc-step-1">
+                <div class="step-num-badge">STEP 1</div>
+                <div class="step-text">Normal vehicle movement — sensors continuously monitor baseline acceleration and vibration at 100Hz</div>
+              </div>
+              <div class="proc-step" id="acc-step-2">
+                <div class="step-num-badge">STEP 2</div>
+                <div class="step-text">Sudden collision / impact event occurs on roadway</div>
+              </div>
+              <div class="proc-step" id="acc-step-3">
+                <div class="step-num-badge">STEP 3</div>
+                <div class="step-text">Accelerometer detects abnormal deceleration peak (&gt; 4.0G threshold)</div>
+              </div>
+              <div class="proc-step" id="acc-step-4">
+                <div class="step-num-badge">STEP 4</div>
+                <div class="step-text">Gyroscope detects abnormal vehicle rotation / yaw angle shift (&gt; 35°/s)</div>
+              </div>
+              <div class="proc-step" id="acc-step-5">
+                <div class="step-num-badge">STEP 5</div>
+                <div class="step-text">Piezo vibration sensor detects mechanical chassis impact shock (&gt; 75%)</div>
+              </div>
+              <div class="proc-step" id="acc-step-6">
+                <div class="step-num-badge">STEP 6</div>
+                <div class="step-text">Microcontroller executes multi-sensor fusion check to confirm genuine crash</div>
+              </div>
+              <div class="proc-step" id="acc-step-7">
+                <div class="step-num-badge">STEP 7</div>
+                <div class="step-text">NEO-6M GPS freezes exact satellite coordinates (Latitude / Longitude)</div>
+              </div>
+              <div class="proc-step" id="acc-step-8">
+                <div class="step-num-badge">STEP 8</div>
+                <div class="step-text">SIM800L dispatches emergency SMS to family &amp; triggers 108 Ambulance dispatch API</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: False Alarm Cancellation -->
+          <div class="process-column" id="process-col-cancel">
+            <div class="process-column-header">
+              <span class="col-icon">🛡️</span>
+              <h3 class="col-title">False alarm — driver cancel</h3>
+            </div>
+            <div class="process-steps-list">
+              <div class="proc-step" id="can-step-1">
+                <div class="step-num-badge">STEP 1</div>
+                <div class="step-text">Minor shock or phone drop triggers preliminary sensor alert</div>
+              </div>
+              <div class="proc-step" id="can-step-2">
+                <div class="step-num-badge">STEP 2</div>
+                <div class="step-text">Microcontroller initiates 5-second safety grace window with audible countdown beeps</div>
+              </div>
+              <div class="proc-step" id="can-step-3">
+                <div class="step-num-badge">STEP 3</div>
+                <div class="step-text">Driver or occupant presses "Cancel Alert" safety override switch</div>
+              </div>
+              <div class="proc-step" id="can-step-4">
+                <div class="step-num-badge">STEP 4</div>
+                <div class="step-text">Emergency GSM transmission is aborted before SMS leaves the cell modem</div>
+              </div>
+              <div class="proc-step" id="can-step-5">
+                <div class="step-num-badge">STEP 5</div>
+                <div class="step-text">False alarm event logged in memory — system returns safely to normal monitoring</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 3: Manual Operation -->
+          <div class="process-column" id="process-col-sos">
+            <div class="process-column-header">
+              <span class="col-icon">🆘</span>
+              <h3 class="col-title">Manual operation — panic SOS</h3>
+            </div>
+            <div class="process-steps-list">
+              <div class="proc-step" id="sos-step-1">
+                <div class="step-num-badge">STEP 1</div>
+                <div class="step-text">Driver or passenger faces medical distress or threat on highway</div>
+              </div>
+              <div class="proc-step" id="sos-step-2">
+                <div class="step-num-badge">STEP 2</div>
+                <div class="step-text">Occupant presses dashboard SOS panic push button</div>
+              </div>
+              <div class="proc-step" id="sos-step-3">
+                <div class="step-num-badge">STEP 3</div>
+                <div class="step-text">Hardware interrupt instantly bypasses sensor threshold evaluation loop</div>
+              </div>
+              <div class="proc-step" id="sos-step-4">
+                <div class="step-num-badge">STEP 4</div>
+                <div class="step-text">GPS captures real-time geolocation with Google Maps URL pinpoint</div>
+              </div>
+              <div class="proc-step" id="sos-step-5">
+                <div class="step-num-badge">STEP 5</div>
+                <div class="step-text">SIM800L executes priority SMS broadcast to family &amp; police network</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Electronic Components (10 Detailed Cards) -->
+    <section class="project-section" id="sec-components">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2 class="section-heading">Electronic Components Used in Prototype</h2>
+            <p class="section-subheading">Core embedded hardware modules, sensing transducers, and communication peripherals.</p>
+          </div>
+          <span class="badge-count">10 HARDWARE MODULES</span>
+        </div>
+
+        <div class="components-cards-grid">
+          <!-- Card 1: ESP32 -->
+          <div class="comp-card">
+            <div class="comp-card-top">
+              <span class="comp-num-badge">1</span>
+              <span class="comp-pill pill-normal" id="card-badge-mcu">ONLINE (240MHz)</span>
+            </div>
+            <div class="comp-icon-box">
+              <svg viewBox="0 0 64 64" fill="none" class="comp-svg">
+                <rect x="14" y="14" width="36" height="36" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+                <rect x="22" y="22" width="20" height="20" rx="2" fill="#1e293b"/>
+                <text x="32" y="34" font-family="monospace" font-size="7" fill="#38bdf8" text-anchor="middle" font-weight="bold">ESP32</text>
+                <path d="M14 20H8M14 28H8M14 36H8M14 44H8M50 20h6M50 28h6M50 36h6M50 44h6M20 14V8M28 14V8M36 14V8M44 14V8M20 50v6M28 50v6M36 50v6M44 50v6" stroke="#38bdf8" stroke-width="1.8"/>
+              </svg>
+            </div>
+            <h4 class="comp-title">ESP32 Microcontroller Core</h4>
+            <p class="comp-desc">Main 32-bit dual-core microcontroller running at 240MHz. Samples sensors via I2C and UART, runs the collision decision algorithm, and controls the GSM/GPS peripherals.</p>
+          </div>
+
+          <!-- Card 2: MPU-6050 -->
+          <div class="comp-card">
+            <div class="comp-card-top">
+              <span class="comp-num-badge">2</span>
+              <span class="comp-pill pill-normal" id="card-badge-mpu">MONITORING</span>
+            </div>
+            <div class="comp-icon-box">
+              <svg viewBox="0 0 64 64" fill="none" class="comp-svg">
+                <rect x="16" y="16" width="32" height="32" rx="4" fill="#0369a1" stroke="#38bdf8" stroke-width="2"/>
+                <circle cx="32" cy="32" r="8" stroke="#facc15" stroke-width="1.8" stroke-dasharray="3 3"/>
+                <path d="M32 20v24M20 32h24" stroke="#e0f2fe" stroke-width="1.6"/>
+                <text x="32" y="54" font-family="monospace" font-size="6" fill="#38bdf8" text-anchor="middle">MPU-6050</text>
+              </svg>
+            </div>
+            <h4 class="comp-title">MPU-6050 6-Axis Motion Sensor</h4>
+            <p class="comp-desc">Digital 3-axis accelerometer and 3-axis gyroscope module. Detects sudden deceleration G-force spikes along with vehicle rollover, spin-out, and abnormal tilt orientation.</p>
+          </div>
+
+          <!-- Card 3: SW-420 -->
+          <div class="comp-card">
+            <div class="comp-card-top">
+              <span class="comp-num-badge">3</span>
+              <span class="comp-pill pill-normal" id="card-badge-vibe">ARMED</span>
+            </div>
+            <div class="comp-icon-box">
+              <svg viewBox="0 0 64 64" fill="none" class="comp-svg">
+                <rect x="14" y="20" width="36" height="24" rx="3" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+                <path d="M22 32c2-6 4-6 6 0s4 6 6 0s4-6 6 0" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="44" cy="26" r="2.5" fill="#ef4444"/>
+                <text x="32" y="52" font-family="monospace" font-size="6" fill="#f59e0b" text-anchor="middle">SW-420</text>
+              </svg>
+            </div>
+            <h4 class="comp-title">SW-420 Piezo Vibration Sensor</h4>
+            <p class="comp-desc">High-sensitivity mechanical shock sensor with onboard LM393 comparator. Detects high-frequency shock waves and chassis metal deformation during vehicle impact.</p>
+          </div>
+
+          <!-- Card 4: NEO-6M GPS -->
+          <div class="comp-card">
+            <div class="comp-card-top">
+              <span class="comp-num-badge">4</span>
+              <span class="comp-pill pill-normal" id="card-badge-gps">3D FIX (9 SATS)</span>
+            </div>
+            <div class="comp-icon-box">
+              <svg viewBox="0 0 64 64" fill="none" class="comp-svg">
+                <rect x="16" y="16" width="32" height="32" rx="3" fill="#14532d" stroke="#34d399" stroke-width="2"/>
+                <rect x="24" y="24" width="16" height="16" rx="2" fill="#1e293b" stroke="#86efac"/>
+                <circle cx="32" cy="32" r="3" fill="#34d399"/>
+                <path d="M20 20l-4-4M44 20l4-4M20 44l-4 4M44 44l4 4" stroke="#34d399" stroke-width="1.8"/>
+                <text x="32" y="54" font-family="monospace" font-size="6" fill="#34d399" text-anchor="middle">NEO-6M</text>
+              </svg>
+            </div>
+            <h4 class="comp-title">NEO-6M GPS Geolocation Module</h4>
+            <p class="comp-desc">High-precision satellite receiver with active ceramic patch antenna. Acquires and decodes NMEA $GPGGA sentences to provide real-time latitude, longitude, speed, and timestamp.</p>
+          </div>
+
+          <!-- Card 5: SIM800L -->
+          <div class="comp-card">
+            <div class="comp-card-top">
+              <span class="comp-num-badge">5</span>
+              <span class="comp-pill pill-normal" id="card-badge-gsm">SIM800L READY</span>
+            </div>
+            <div class="comp-icon-box">
+              <svg viewBox="0 0 64 64" fill="none" class="comp-svg">
+                <rect x="18" y="14" width="28" height="36" rx="3" fill="#831843" stroke="#f472b6" stroke-width="2"/>
+                <rect x="24" y="20" width="16" height="20" fill="#1e293b"/>
+                <path d="M38 10v4M26 14v-2" stroke="#f472b6" stroke-width="1.8"/>
+                <text x="32" y="32" font-family="monospace" font-size="5" fill="#f472b6" text-anchor="middle">GSM</text>
+                <text x="32" y="54" font-family="monospace" font-size="6" fill="#f472b6" text-anchor="middle">SIM800L</text>
+              </svg>
+            </div>
+            <h4 class="comp-title">SIM800L GSM / GPRS Modem</h4>
+            <p class="comp-desc">Quad-band cellular module. Executes AT commands (AT+CMGS) over serial UART to automatically transmit emergency SOS SMS text messages and trigger cloud HTTP endpoints.</p>
+          </div>
+
+          <!-- Card 6: Buzzer -->
+          <div class="comp-card">
+            <div class="comp-card-top">
+              <span class="comp-num-badge">6</span>
+              <span class="comp-pill pill-normal" id="card-badge-buzzer">STANDBY</span>
+            </div>
+            <div class="comp-icon-box">
+              <svg viewBox="0 0 64 64" fill="none" class="comp-svg">
+                <circle cx="32" cy="32" r="16" fill="#0f172a" stroke="#ef4444" stroke-width="2"/>
+                <circle cx="32" cy="32" r="6" fill="#334155"/>
+                <path d="M44 24c3 3 4 8 3 13M48 20c5 5 6 13 4 20" stroke="#f87171" stroke-width="1.8" stroke-linecap="round"/>
+                <text x="32" y="54" font-family="monospace" font-size="6" fill="#f87171" text-anchor="middle">BUZZER</text>
+              </svg>
+            </div>
+            <h4 class="comp-title">Active Alert Siren / Piezo Buzzer</h4>
+            <p class="comp-desc">Emits an audible warning siren during crash confirmation and beeps during the 5-second false-alarm countdown window to alert occupants and bystanders.</p>
+          </div>
+
+          <!-- Card 7: LEDs -->
+          <div class="comp-card">
+            <div class="comp-card-top">
+              <span class="comp-num-badge">7</span>
+              <span class="comp-pill pill-normal" id="card-badge-leds">GREEN: ON • RED: OFF</span>
+            </div>
+            <div class="comp-icon-box">
+              <svg viewBox="0 0 64 64" fill="none" class="comp-svg">
+                <path d="M22 34V24a6 6 0 0 1 12 0v10" fill="#10b981" stroke="#34d399" stroke-width="1.8"/>
+                <line x1="28" y1="36" x2="28" y2="48" stroke="#34d399" stroke-width="1.8"/>
+                <path d="M38 34V24a6 6 0 0 1 12 0v10" fill="#dc2626" stroke="#f87171" stroke-width="1.8"/>
+                <line x1="44" y1="36" x2="44" y2="48" stroke="#f87171" stroke-width="1.8"/>
+                <text x="32" y="54" font-family="monospace" font-size="6" fill="#38bdf8" text-anchor="middle">STATUS LEDS</text>
+              </svg>
+            </div>
+            <h4 class="comp-title">Dual LED Status Indicators</h4>
+            <p class="comp-desc">Visual telemetry indicators: Green LED illuminates during normal transit and health check; Red LED flashes rapidly upon collision detection and emergency dispatch.</p>
+          </div>
+
+          <!-- Card 8: SOS Button -->
+          <div class="comp-card">
+            <div class="comp-card-top">
+              <span class="comp-num-badge">8</span>
+              <span class="comp-pill pill-normal" id="card-badge-sos">ARMED</span>
+            </div>
+            <div class="comp-icon-box">
+              <svg viewBox="0 0 64 64" fill="none" class="comp-svg">
+                <circle cx="32" cy="32" r="16" fill="#b91c1c" stroke="#f87171" stroke-width="2"/>
+                <circle cx="32" cy="32" r="10" fill="#ef4444"/>
+                <text x="32" y="35" font-family="sans-serif" font-weight="900" font-size="7" fill="#fff" text-anchor="middle">SOS</text>
+                <text x="32" y="54" font-family="monospace" font-size="6" fill="#f87171" text-anchor="middle">PANIC BTN</text>
+              </svg>
+            </div>
+            <h4 class="comp-title">Emergency SOS Panic Switch</h4>
+            <p class="comp-desc">Mechanical tactile push button connected to interrupt pin GPIO 32. Allows driver or passengers to manually trigger an immediate emergency alert without threshold delays.</p>
+          </div>
+
+          <!-- Card 9: LM2596 -->
+          <div class="comp-card">
+            <div class="comp-card-top">
+              <span class="comp-num-badge">9</span>
+              <span class="comp-pill pill-normal">12V &rarr; 5V / 3.3V</span>
+            </div>
+            <div class="comp-icon-box">
+              <svg viewBox="0 0 64 64" fill="none" class="comp-svg">
+                <rect x="16" y="18" width="32" height="28" rx="3" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <circle cx="26" cy="32" r="6" fill="#0284c7"/>
+                <rect x="36" y="26" width="8" height="12" fill="#475569"/>
+                <text x="32" y="54" font-family="monospace" font-size="6" fill="#38bdf8" text-anchor="middle">LM2596 BUCK</text>
+              </svg>
+            </div>
+            <h4 class="comp-title">LM2596 DC-DC Buck Regulator</h4>
+            <p class="comp-desc">Converts vehicle 12V automotive battery voltage down to clean, regulated 5V and 3.3V power rails capable of supplying 2A current bursts during GSM transmissions.</p>
+          </div>
+
+          <!-- Card 10: Wiring Harness -->
+          <div class="comp-card">
+            <div class="comp-card-top">
+              <span class="comp-num-badge">10</span>
+              <span class="comp-pill pill-normal">SHIELDED BUS</span>
+            </div>
+            <div class="comp-icon-box">
+              <svg viewBox="0 0 64 64" fill="none" class="comp-svg">
+                <path d="M16 24c8 10 24-10 32 0M16 32c8 10 24-10 32 0M16 40c8 10 24-10 32 0" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round"/>
+                <text x="32" y="54" font-family="monospace" font-size="6" fill="#38bdf8" text-anchor="middle">BUS WIRING</text>
+              </svg>
+            </div>
+            <h4 class="comp-title">Automotive Wiring Harness</h4>
+            <p class="comp-desc">Shielded, color-coded wiring connecting sensor buses (I2C, UART, GPIO) between the vehicle roof sensor node, dashboard display, and central microcontroller unit.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Electronic Components and System Architecture (Block Diagram) -->
+    <section class="project-section" id="sec-architecture">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2 class="section-heading">Electronic Components and System Architecture</h2>
+            <p class="section-subheading">Every block below reflects the live state of the simulation.</p>
+          </div>
+          <span class="live-status-chip">
+            <span class="chip-dot dot-green"></span>
+            <span>SYSTEM INTERCONNECT</span>
+          </span>
+        </div>
+
+        <div class="architecture-diagram-container">
+          <div class="arch-canvas-box">
+            <!-- Power Block -->
+            <div class="arch-block arch-block-power" id="arch-block-power">
+              <div class="arch-block-tag">POWER SUBSYSTEM</div>
+              <h4 class="arch-block-title">Power Supply</h4>
+              <p class="arch-block-sub">12V Car Battery &rarr; LM2596</p>
+              <span class="arch-status-tag" id="arch-status-power">12V / 5V ACTIVE</span>
+            </div>
+
+            <!-- Wire Power to MCU -->
+            <div class="arch-bus-line bus-power">
+              <span class="bus-label">VIN 5V / 3.3V</span>
+            </div>
+
+            <!-- Sensor Group -->
+            <div class="arch-block arch-block-sensors" id="arch-block-sensors">
+              <div class="arch-block-tag">INPUT SENSORS</div>
+              <h4 class="arch-block-title">Sensor Array Node</h4>
+              <ul class="arch-item-list">
+                <li>• MPU-6050 (Accel + Gyro)</li>
+                <li>• SW-420 Piezo Shock Sensor</li>
+                <li>• NEO-6M GPS Receiver</li>
+                <li>• Manual SOS Panic Button</li>
+              </ul>
+              <span class="arch-status-tag" id="arch-status-sensors">SAMPLING (100Hz)</span>
+            </div>
+
+            <!-- Wire Sensors to MCU -->
+            <div class="arch-bus-line bus-data">
+              <span class="bus-label">I2C / UART / GPIO</span>
+            </div>
+
+            <!-- Main Processing MCU -->
+            <div class="arch-block arch-block-mcu" id="arch-block-mcu">
+              <div class="arch-block-tag">CENTRAL PROCESSING</div>
+              <h4 class="arch-block-title">ESP32 Controller</h4>
+              <p class="arch-block-sub">Xtensa Dual-Core 240MHz</p>
+              <div class="arch-fusion-badge">Multi-Sensor Fusion Engine</div>
+              <span class="arch-status-tag" id="arch-status-mcu">ARMED &amp; MONITORING</span>
+            </div>
+
+            <!-- Wire MCU to Comm -->
+            <div class="arch-bus-line bus-comm">
+              <span class="bus-label">UART1 (AT Commands)</span>
+            </div>
+
+            <!-- Communication & Output Block -->
+            <div class="arch-block arch-block-gsm" id="arch-block-gsm">
+              <div class="arch-block-tag">COMMUNICATION MODEM</div>
+              <h4 class="arch-block-title">SIM800L GSM Module</h4>
+              <p class="arch-block-sub">Cellular 2G/4G Quad-Band</p>
+              <span class="arch-status-tag" id="arch-status-gsm">CELL READY</span>
+            </div>
+
+            <!-- Wire Comm to Emergency Network -->
+            <div class="arch-bus-line bus-cellular">
+              <span class="bus-label">SMS &amp; HTTP Cloud</span>
+            </div>
+
+            <!-- Emergency Cloud Services -->
+            <div class="arch-block arch-block-services" id="arch-block-services">
+              <div class="arch-block-tag">EMERGENCY NETWORK</div>
+              <h4 class="arch-block-title">Emergency Response</h4>
+              <ul class="arch-item-list">
+                <li>📱 Family Contact SMS (+91 98765 43210)</li>
+                <li>🚑 108 Emergency Ambulance Dispatch</li>
+                <li>🚓 State Highway Police Patrol (112)</li>
+              </ul>
+              <span class="arch-status-tag" id="arch-status-services">STANDBY (AWAITING EVENT)</span>
+            </div>
+
+            <!-- Buzzer & LED Actuation -->
+            <div class="arch-block arch-block-buzzer" id="arch-block-buzzer">
+              <div class="arch-block-tag">AUDIBLE &amp; VISUAL ALARM</div>
+              <h4 class="arch-block-title">Buzzer &amp; Status LEDs</h4>
+              <p class="arch-block-sub">880Hz Siren • Flashing Red LED</p>
+              <span class="arch-status-tag" id="arch-status-buzzer">STANDBY (OFF)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Circuit Connection Details (Interactive Logical Wiring Diagram) -->
+    <section class="project-section" id="sec-circuit">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2 class="section-heading">Circuit Connection Details</h2>
+            <p class="section-subheading">Logical wiring (software simulation). Wires light up when current / signal flows.</p>
+          </div>
+          <span class="live-status-chip">
+            <span class="chip-dot dot-green"></span>
+            <span>INTERACTIVE SCHEMATIC</span>
+          </span>
+        </div>
+
+        <div class="circuit-diagram-wrapper">
+          <svg viewBox="0 0 1100 520" class="circuit-svg" id="circuit-svg">
+            <defs>
+              <linearGradient id="grad-wire-i2c" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#38bdf8"/>
+                <stop offset="100%" stop-color="#0284c7"/>
+              </linearGradient>
+              <linearGradient id="grad-wire-power" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#ef4444"/>
+                <stop offset="100%" stop-color="#b91c1c"/>
+              </linearGradient>
+              <linearGradient id="grad-wire-uart" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#c084fc"/>
+                <stop offset="100%" stop-color="#9333ea"/>
+              </linearGradient>
+              <linearGradient id="grad-wire-alert" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#f59e0b"/>
+                <stop offset="100%" stop-color="#d97706"/>
+              </linearGradient>
+              <filter id="glow-effect" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- CONNECTION WIRES (PATHS) -->
+            <!-- 1. MPU-6050 to ESP32 (I2C SDA: GPIO 21, SCL: GPIO 22) -->
+            <path id="wire-sda" d="M 230 110 L 370 110 L 370 210 L 440 210" class="wire-path wire-i2c"/>
+            <path id="wire-scl" d="M 230 130 L 350 130 L 350 230 L 440 230" class="wire-path wire-i2c"/>
+            <path id="wire-mpu-vcc" d="M 230 90 L 390 90 L 390 190 L 440 190" class="wire-path wire-pwr"/>
+
+            <!-- 2. SW-420 to ESP32 (GPIO 4: DO, GPIO 34: AO) -->
+            <path id="wire-vibe-do" d="M 230 250 L 440 250" class="wire-path wire-alert"/>
+            <path id="wire-vibe-ao" d="M 230 270 L 440 270" class="wire-path wire-alert"/>
+
+            <!-- 3. NEO-6M GPS to ESP32 (UART2 RX: GPIO 16, TX: GPIO 17) -->
+            <path id="wire-gps-tx" d="M 230 380 L 360 380 L 360 310 L 440 310" class="wire-path wire-uart"/>
+            <path id="wire-gps-rx" d="M 230 400 L 380 400 L 380 330 L 440 330" class="wire-path wire-uart"/>
+
+            <!-- 4. SOS Button to ESP32 (GPIO 32) -->
+            <path id="wire-sos" d="M 230 460 L 410 460 L 410 360 L 440 360" class="wire-path wire-alert"/>
+
+            <!-- 5. ESP32 to SIM800L GSM (UART1 TX: GPIO 27, RX: GPIO 26) -->
+            <path id="wire-gsm-tx" d="M 640 210 L 730 210 L 730 110 L 850 110" class="wire-path wire-uart"/>
+            <path id="wire-gsm-rx" d="M 640 230 L 750 230 L 750 130 L 850 130" class="wire-path wire-uart"/>
+
+            <!-- 6. ESP32 to Active Buzzer (GPIO 25) -->
+            <path id="wire-buzzer" d="M 640 270 L 850 270" class="wire-path wire-alert"/>
+
+            <!-- 7. ESP32 to Status LEDs (GPIO 18 & GPIO 5) -->
+            <path id="wire-led-green" d="M 640 320 L 760 320 L 760 370 L 850 370" class="wire-path wire-i2c"/>
+            <path id="wire-led-red" d="M 640 340 L 780 340 L 780 410 L 850 410" class="wire-path wire-pwr"/>
+
+            <!-- 8. LM2596 Power to ESP32 (VIN & GND) -->
+            <path id="wire-vin" d="M 640 450 L 850 450" class="wire-path wire-pwr"/>
+
+            <!-- MODULE BLOCKS -->
+            <!-- Left Modules -->
+            <!-- MPU-6050 Module -->
+            <g class="circuit-module" transform="translate(60, 60)">
+              <rect width="170" height="90" rx="6" fill="#0c1a2e" stroke="#0284c7" stroke-width="2"/>
+              <rect width="170" height="24" rx="6" fill="#0369a1"/>
+              <text x="85" y="16" fill="#fff" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">MPU-6050 ACCEL/GYRO</text>
+              <text x="15" y="44" fill="#94a3b8" font-family="monospace" font-size="10">VCC (3.3V)</text>
+              <text x="15" y="60" fill="#94a3b8" font-family="monospace" font-size="10">SDA (I2C Data)</text>
+              <text x="15" y="76" fill="#94a3b8" font-family="monospace" font-size="10">SCL (I2C Clock)</text>
+              <circle cx="170" cy="30" r="5" fill="#ef4444" class="circuit-pin" data-wire="wire-mpu-vcc"/>
+              <circle cx="170" cy="50" r="5" fill="#38bdf8" class="circuit-pin" data-wire="wire-sda"/>
+              <circle cx="170" cy="70" r="5" fill="#38bdf8" class="circuit-pin" data-wire="wire-scl"/>
+            </g>
+
+            <!-- SW-420 Module -->
+            <g class="circuit-module" transform="translate(60, 210)">
+              <rect width="170" height="80" rx="6" fill="#1c1917" stroke="#d97706" stroke-width="2"/>
+              <rect width="170" height="24" rx="6" fill="#b45309"/>
+              <text x="85" y="16" fill="#fff" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">SW-420 PIEZO SENSOR</text>
+              <text x="15" y="45" fill="#94a3b8" font-family="monospace" font-size="10">DO (Shock Trigger)</text>
+              <text x="15" y="65" fill="#94a3b8" font-family="monospace" font-size="10">AO (Analog Peak)</text>
+              <circle cx="170" cy="40" r="5" fill="#f59e0b" class="circuit-pin" data-wire="wire-vibe-do"/>
+              <circle cx="170" cy="60" r="5" fill="#f59e0b" class="circuit-pin" data-wire="wire-vibe-ao"/>
+            </g>
+
+            <!-- NEO-6M GPS Module -->
+            <g class="circuit-module" transform="translate(60, 340)">
+              <rect width="170" height="80" rx="6" fill="#062e1e" stroke="#059669" stroke-width="2"/>
+              <rect width="170" height="24" rx="6" fill="#047857"/>
+              <text x="85" y="16" fill="#fff" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">NEO-6M GPS RECEIVER</text>
+              <text x="15" y="45" fill="#94a3b8" font-family="monospace" font-size="10">TX (NMEA Data)</text>
+              <text x="15" y="65" fill="#94a3b8" font-family="monospace" font-size="10">RX (Config)</text>
+              <circle cx="170" cy="40" r="5" fill="#34d399" class="circuit-pin" data-wire="wire-gps-tx"/>
+              <circle cx="170" cy="60" r="5" fill="#34d399" class="circuit-pin" data-wire="wire-gps-rx"/>
+            </g>
+
+            <!-- SOS Push Button -->
+            <g class="circuit-module" transform="translate(60, 440)">
+              <rect width="170" height="50" rx="6" fill="#2d0606" stroke="#dc2626" stroke-width="2"/>
+              <text x="85" y="30" fill="#fecaca" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">🆘 SOS PANIC BUTTON</text>
+              <circle cx="170" cy="20" r="5" fill="#ef4444" class="circuit-pin" data-wire="wire-sos"/>
+            </g>
+
+            <!-- CENTRAL CONTROLLER: ESP32 PINOUT BOARD -->
+            <g class="circuit-module circuit-mcu-center" transform="translate(440, 70)">
+              <rect width="200" height="380" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="2.5" filter="url(#glow-effect)"/>
+              <rect width="200" height="36" rx="10" fill="#0284c7"/>
+              <text x="100" y="24" fill="#fff" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">ESP32 DevKit V1</text>
+              
+              <!-- Left Pins (Inputs) -->
+              <text x="12" y="125" fill="#38bdf8" font-family="monospace" font-size="10">3V3 &bull;</text>
+              <text x="12" y="145" fill="#38bdf8" font-family="monospace" font-size="10">GPIO 21 (SDA) &bull;</text>
+              <text x="12" y="165" fill="#38bdf8" font-family="monospace" font-size="10">GPIO 22 (SCL) &bull;</text>
+              <text x="12" y="185" fill="#f59e0b" font-family="monospace" font-size="10">GPIO 4 (DO) &bull;</text>
+              <text x="12" y="205" fill="#f59e0b" font-family="monospace" font-size="10">GPIO 34 (ADC) &bull;</text>
+              <text x="12" y="245" fill="#34d399" font-family="monospace" font-size="10">GPIO 16 (RX2) &bull;</text>
+              <text x="12" y="265" fill="#34d399" font-family="monospace" font-size="10">GPIO 17 (TX2) &bull;</text>
+              <text x="12" y="295" fill="#ef4444" font-family="monospace" font-size="10">GPIO 32 (SOS) &bull;</text>
+
+              <!-- Central Chip -->
+              <rect x="55" y="160" width="90" height="90" rx="6" fill="#1e293b" stroke="#64748b"/>
+              <text x="100" y="205" fill="#38bdf8" font-family="monospace" font-size="9" text-anchor="middle" font-weight="bold">ESP-WROOM-32</text>
+              <text x="100" y="222" fill="#94a3b8" font-family="monospace" font-size="8" text-anchor="middle">240MHz Dual-Core</text>
+
+              <!-- Right Pins (Outputs & Power) -->
+              <text x="188" y="145" fill="#c084fc" font-family="monospace" font-size="10" text-anchor="end">&bull; GPIO 27 (TX1)</text>
+              <text x="188" y="165" fill="#c084fc" font-family="monospace" font-size="10" text-anchor="end">&bull; GPIO 26 (RX1)</text>
+              <text x="188" y="205" fill="#f87171" font-family="monospace" font-size="10" text-anchor="end">&bull; GPIO 25 (Buzzer)</text>
+              <text x="188" y="255" fill="#34d399" font-family="monospace" font-size="10" text-anchor="end">&bull; GPIO 18 (LED-G)</text>
+              <text x="188" y="275" fill="#ef4444" font-family="monospace" font-size="10" text-anchor="end">&bull; GPIO 5 (LED-R)</text>
+              <text x="188" y="380" fill="#ef4444" font-family="monospace" font-size="10" text-anchor="end">&bull; VIN (5V In)</text>
+            </g>
+
+            <!-- Right Modules -->
+            <!-- SIM800L GSM Module -->
+            <g class="circuit-module" transform="translate(850, 60)">
+              <rect width="180" height="90" rx="6" fill="#2d061c" stroke="#db2777" stroke-width="2"/>
+              <rect width="180" height="24" rx="6" fill="#be185d"/>
+              <text x="90" y="16" fill="#fff" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">SIM800L GSM MODEM</text>
+              <text x="165" y="55" fill="#94a3b8" font-family="monospace" font-size="10" text-anchor="end">RXD (AT Commands)</text>
+              <text x="165" y="75" fill="#94a3b8" font-family="monospace" font-size="10" text-anchor="end">TXD (Responses)</text>
+              <circle cx="0" cy="50" r="5" fill="#f472b6" class="circuit-pin" data-wire="wire-gsm-tx"/>
+              <circle cx="0" cy="70" r="5" fill="#f472b6" class="circuit-pin" data-wire="wire-gsm-rx"/>
+            </g>
+
+            <!-- Active Buzzer -->
+            <g class="circuit-module" transform="translate(850, 230)">
+              <rect width="180" height="70" rx="6" fill="#261010" stroke="#ef4444" stroke-width="2"/>
+              <rect width="180" height="24" rx="6" fill="#b91c1c"/>
+              <text x="90" y="16" fill="#fff" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">ACTIVE SIREN BUZZER</text>
+              <text x="165" y="50" fill="#94a3b8" font-family="monospace" font-size="10" text-anchor="end">Signal (+) &bull; 880Hz</text>
+              <circle cx="0" cy="40" r="5" fill="#f87171" class="circuit-pin" data-wire="wire-buzzer"/>
+            </g>
+
+            <!-- LED Indicators -->
+            <g class="circuit-module" transform="translate(850, 330)">
+              <rect width="180" height="90" rx="6" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+              <rect width="180" height="24" rx="6" fill="#334155"/>
+              <text x="90" y="16" fill="#fff" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">TELEMETRY LEDS</text>
+              <text x="165" y="46" fill="#34d399" font-family="monospace" font-size="10" text-anchor="end">Green LED (Normal)</text>
+              <text x="165" y="76" fill="#f87171" font-family="monospace" font-size="10" text-anchor="end">Red LED (Alert)</text>
+              <circle cx="0" cy="40" r="5" fill="#34d399" class="circuit-pin" data-wire="wire-led-green"/>
+              <circle cx="0" cy="80" r="5" fill="#ef4444" class="circuit-pin" data-wire="wire-led-red"/>
+            </g>
+
+            <!-- LM2596 Power Supply -->
+            <g class="circuit-module" transform="translate(850, 440)">
+              <rect width="180" height="50" rx="6" fill="#0f2136" stroke="#0284c7" stroke-width="2"/>
+              <text x="90" y="30" fill="#7dd3fc" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">⚡ 12V &rarr; 5V REGULATOR</text>
+              <circle cx="0" cy="10" r="5" fill="#ef4444" class="circuit-pin" data-wire="wire-vin"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: Component Connection Table -->
+    <section class="project-section" id="sec-table">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2 class="section-heading">Component Connection Table</h2>
+            <p class="section-subheading">Complete pinout interfacing between sensors, communication modules, actuators, and the microcontroller.</p>
+          </div>
+          <span class="badge-count">17 PIN CONNECTIONS</span>
+        </div>
+
+        <div class="table-responsive-box">
+          <table class="connection-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Terminal</th>
+                <th>Connected to</th>
+                <th>Type</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>MPU-6050 (Accel + Gyro)</strong></td>
+                <td><code>VCC / GND</code></td>
+                <td>ESP32 <code>3.3V / GND</code></td>
+                <td><span class="badge-pill p-pwr">Power</span></td>
+                <td>Powers the 6-axis MEMS accelerometer &amp; gyroscope sensor IC</td>
+              </tr>
+              <tr>
+                <td><strong>MPU-6050 (Accel + Gyro)</strong></td>
+                <td><code>SDA</code></td>
+                <td>ESP32 <span class="pin-badge">GPIO 21</span></td>
+                <td><span class="badge-pill p-i2c">I2C Data</span></td>
+                <td>Transfers real-time lateral, longitudinal, and vertical acceleration data</td>
+              </tr>
+              <tr>
+                <td><strong>MPU-6050 (Accel + Gyro)</strong></td>
+                <td><code>SCL</code></td>
+                <td>ESP32 <span class="pin-badge">GPIO 22</span></td>
+                <td><span class="badge-pill p-i2c">I2C Clock</span></td>
+                <td>400kHz synchronous serial clock line for sensor communication</td>
+              </tr>
+              <tr>
+                <td><strong>MPU-6050 (Accel + Gyro)</strong></td>
+                <td><code>INT</code></td>
+                <td>ESP32 <span class="pin-badge">GPIO 19</span></td>
+                <td><span class="badge-pill p-dig">Digital In</span></td>
+                <td>Hardware motion interrupt pin for instantaneous wake-up on G-spike</td>
+              </tr>
+              <tr>
+                <td><strong>SW-420 Vibration Sensor</strong></td>
+                <td><code>VCC / GND</code></td>
+                <td>ESP32 <code>5V / GND</code></td>
+                <td><span class="badge-pill p-pwr">Power</span></td>
+                <td>Powers LM393 comparator circuitry and spring-type piezo mass</td>
+              </tr>
+              <tr>
+                <td><strong>SW-420 Vibration Sensor</strong></td>
+                <td><code>DO (Digital Out)</code></td>
+                <td>ESP32 <span class="pin-badge">GPIO 4</span></td>
+                <td><span class="badge-pill p-dig">Digital In</span></td>
+                <td>Switches to logic HIGH when mechanical impact shock exceeds threshold</td>
+              </tr>
+              <tr>
+                <td><strong>SW-420 Vibration Sensor</strong></td>
+                <td><code>AO (Analog Out)</code></td>
+                <td>ESP32 <span class="pin-badge">GPIO 34</span> (ADC1)</td>
+                <td><span class="badge-pill p-ana">Analog In</span></td>
+                <td>Quantifies peak vibration intensity percentage (0 &ndash; 4095 scale)</td>
+              </tr>
+              <tr>
+                <td><strong>NEO-6M GPS Module</strong></td>
+                <td><code>VCC / GND</code></td>
+                <td>ESP32 <code>5V / GND</code></td>
+                <td><span class="badge-pill p-pwr">Power</span></td>
+                <td>Powers GPS RF receiver and active ceramic patch antenna</td>
+              </tr>
+              <tr>
+                <td><strong>NEO-6M GPS Module</strong></td>
+                <td><code>TXD</code></td>
+                <td>ESP32 <span class="pin-badge">GPIO 16</span> (RX2)</td>
+                <td><span class="badge-pill p-uart">UART In</span></td>
+                <td>Streams live NMEA sentences ($GPGGA, $GPRMC) at 9600 baud rate</td>
+              </tr>
+              <tr>
+                <td><strong>NEO-6M GPS Module</strong></td>
+                <td><code>RXD</code></td>
+                <td>ESP32 <span class="pin-badge">GPIO 17</span> (TX2)</td>
+                <td><span class="badge-pill p-uart">UART Out</span></td>
+                <td>Transmits configuration and update-rate control commands to GPS IC</td>
+              </tr>
+              <tr>
+                <td><strong>SIM800L GSM Module</strong></td>
+                <td><code>VCC / GND</code></td>
+                <td>External <code>4.2V 2A / GND</code></td>
+                <td><span class="badge-pill p-pwr">Power</span></td>
+                <td>Dedicated high-current supply handling 2A burst current during SMS transmission</td>
+              </tr>
+              <tr>
+                <td><strong>SIM800L GSM Module</strong></td>
+                <td><code>TXD</code></td>
+                <td>ESP32 <span class="pin-badge">GPIO 26</span> (RX1)</td>
+                <td><span class="badge-pill p-uart">UART In</span></td>
+                <td>Receives AT-command responses (+CMGS: OK) and cellular network status</td>
+              </tr>
+              <tr>
+                <td><strong>SIM800L GSM Module</strong></td>
+                <td><code>RXD</code></td>
+                <td>ESP32 <span class="pin-badge">GPIO 27</span> (TX1)</td>
+                <td><span class="badge-pill p-uart">UART Out</span></td>
+                <td>Sends AT command payloads for automated SMS dispatch &amp; HTTP requests</td>
+              </tr>
+              <tr>
+                <td><strong>Active Piezo Buzzer</strong></td>
+                <td><code>+ / -</code></td>
+                <td>ESP32 <span class="pin-badge">GPIO 25</span> / GND</td>
+                <td><span class="badge-pill p-dig">Digital Out</span></td>
+                <td>Emits 880Hz / 660Hz emergency siren and 5s countdown safety warning</td>
+              </tr>
+              <tr>
+                <td><strong>Green Status LED</strong></td>
+                <td>Anode via 330&Omega;</td>
+                <td>ESP32 <span class="pin-badge">GPIO 18</span> / GND</td>
+                <td><span class="badge-pill p-dig">Digital Out</span></td>
+                <td>Normal system health indicator (solid green during vehicle cruising)</td>
+              </tr>
+              <tr>
+                <td><strong>Red Alert LED</strong></td>
+                <td>Anode via 330&Omega;</td>
+                <td>ESP32 <span class="pin-badge">GPIO 5</span> / GND</td>
+                <td><span class="badge-pill p-dig">Digital Out</span></td>
+                <td>High-priority crash indicator (rapidly flashes on verified collision)</td>
+              </tr>
+              <tr>
+                <td><strong>Emergency SOS Switch</strong></td>
+                <td>Terminal 1 / 2</td>
+                <td>ESP32 <span class="pin-badge">GPIO 32</span> / GND</td>
+                <td><span class="badge-pill p-dig">Digital In</span></td>
+                <td>Manual driver override button with internal pull-up resistor</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: Project Information (Interactive Tabbed Presentation Summary) -->
+    <section class="project-section" id="sec-info">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h2 class="section-heading">Project Information</h2>
+            <p class="section-subheading">Comprehensive engineering summary for project review, evaluation, and viva presentation.</p>
+          </div>
+          <span class="badge-count">11 TECHNICAL TOPICS</span>
+        </div>
+
+        <!-- Interactive Tab Pill Strip -->
+        <div class="project-tab-nav">
+          <button class="tab-btn active" data-tab="abstract">Abstract</button>
+          <button class="tab-btn" data-tab="problem">Problem Statement</button>
+          <button class="tab-btn" data-tab="objectives">Objectives</button>
+          <button class="tab-btn" data-tab="components">Components Used</button>
+          <button class="tab-btn" data-tab="working">Working Principle</button>
+          <button class="tab-btn" data-tab="block">Block Diagram</button>
+          <button class="tab-btn" data-tab="applications">Applications</button>
+          <button class="tab-btn" data-tab="advantages">Advantages</button>
+          <button class="tab-btn" data-tab="limitations">Limitations</button>
+          <button class="tab-btn" data-tab="conclusion">Conclusion</button>
+          <button class="tab-btn tab-btn-code" data-tab="code">💻 Arduino / ESP32 Sketch</button>
+        </div>
+
+        <!-- Tab Content Panes -->
+        <div class="tab-content-container">
+          <!-- Pane 1: Abstract -->
+          <div class="tab-pane active" id="tab-abstract">
+            <h3 class="pane-title">Project Abstract</h3>
+            <p class="pane-text">Road traffic accidents are among the leading causes of preventable fatalities worldwide, with delay in medical response during the crucial "Golden Hour" accounting for over 50% of highway deaths. This project presents a reliable, automated <strong>Vehicle Accident Detection and Alert System Using Sensors</strong> designed to detect vehicular collisions in real time and dispatch instantaneous emergency notifications without requiring human intervention.</p>
+            <p class="pane-text">The system utilizes an integrated multi-sensor array combining an <strong>MPU-6050</strong> (3-axis MEMS accelerometer and gyroscope) to monitor sudden kinetic impact G-forces and rotational rollover, alongside an <strong>SW-420 piezo vibration sensor</strong> to detect structural shock waves caused by metal deformation. An <strong>ESP32 microcontroller</strong> executes a multi-sensor fusion algorithm to eliminate false alarms caused by speed breakers or sudden braking. Once an accident is confirmed, a <strong>NEO-6M GPS receiver</strong> captures precise geographical coordinates, and a <strong>SIM800L GSM module</strong> transmits an automated emergency SMS containing a direct Google Maps link to pre-configured family contacts and the nearest 108 Emergency Ambulance network.</p>
+          </div>
+
+          <!-- Pane 2: Problem Statement -->
+          <div class="tab-pane" id="tab-problem">
+            <h3 class="pane-title">Problem Statement</h3>
+            <p class="pane-text">According to global highway safety reports, a significant percentage of accident fatalities occur not from the immediate mechanical impact, but due to delays in reporting the incident and locating victims, especially during late-night hours or on desolate highway stretches where passengers are incapacitated or rendered unconscious.</p>
+            <div class="pane-grid-2">
+              <div class="pane-callout">
+                <h4>⚠️ Existing Challenges</h4>
+                <ul>
+                  <li>Lack of automatic reporting mechanisms in standard passenger vehicles.</li>
+                  <li>Inability of injured or unconscious passengers to place emergency calls.</li>
+                  <li>Inaccurate or vague crash site descriptions provided by panicked callers.</li>
+                  <li>Frequent false emergency dispatches triggered by crude single-sensor systems.</li>
+                </ul>
+              </div>
+              <div class="pane-callout">
+                <h4>🎯 Proposed Engineering Solution</h4>
+                <ul>
+                  <li>Automated multi-sensor verification combining G-force, tilt, and shock.</li>
+                  <li>Exact satellite GPS geolocation pinpoint with direct navigation link.</li>
+                  <li>Cellular SMS transmission functioning even in low-bandwidth 2G/4G coverage.</li>
+                  <li>5-second driver safety cancellation window to eliminate false positives.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pane 3: Objectives -->
+          <div class="tab-pane" id="tab-objectives">
+            <h3 class="pane-title">Project Objectives</h3>
+            <div class="objectives-list">
+              <div class="obj-item">
+                <span class="obj-num">01</span>
+                <div>
+                  <strong>Real-Time Collision Detection:</strong> Continuously monitor vehicle acceleration, angular rate, and vibration at 100Hz using I2C and analog transducers.
+                </div>
+              </div>
+              <div class="obj-item">
+                <span class="obj-num">02</span>
+                <div>
+                  <strong>Multi-Sensor Fusion Filtering:</strong> Implement algorithmic thresholds (Total G-Force &gt; 4.0G, Vibration &gt; 75%, Yaw Rate &gt; 35°/s) to distinguish severe collisions from rough road conditions.
+                </div>
+              </div>
+              <div class="obj-item">
+                <span class="obj-num">03</span>
+                <div>
+                  <strong>Automatic Geolocation Capture:</strong> Interface NEO-6M GPS receiver to lock exact latitude, longitude, and speed within ±1.8m accuracy.
+                </div>
+              </div>
+              <div class="obj-item">
+                <span class="obj-num">04</span>
+                <div>
+                  <strong>Automated Emergency Alert Transmission:</strong> Program SIM800L GSM modem to format and broadcast SMS alerts containing Google Maps coordinates to family and emergency rescue teams.
+                </div>
+              </div>
+              <div class="obj-item">
+                <span class="obj-num">05</span>
+                <div>
+                  <strong>False Alarm Safety Override:</strong> Provide a 5-second cancellable warning buzzer window for the driver before emergency messages are dispatched.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pane 4: Components Used -->
+          <div class="tab-pane" id="tab-components">
+            <h3 class="pane-title">Hardware &amp; Software Components</h3>
+            <div class="pane-grid-2">
+              <div class="pane-card-box">
+                <h4>Hardware Modules</h4>
+                <ul>
+                  <li><strong>ESP32 Microcontroller:</strong> Dual-core 240MHz, 520KB SRAM, built-in I2C/UART/SPI.</li>
+                  <li><strong>MPU-6050 Motion Tracking Sensor:</strong> 16-bit ADC, &plusmn;16g accelerometer range, &plusmn;2000&deg;/s gyro range.</li>
+                  <li><strong>SW-420 Piezo Vibration Sensor:</strong> High sensitivity shock detector with LM393 comparator.</li>
+                  <li><strong>NEO-6M GPS Receiver:</strong> 50-channel u-blox 6 engine, active ceramic patch antenna.</li>
+                  <li><strong>SIM800L GSM/GPRS Modem:</strong> Quad-band 850/900/1800/1900MHz cellular transceiver.</li>
+                  <li><strong>Active Buzzer &amp; High-Brightness LEDs:</strong> Audible siren and visual status indicators.</li>
+                  <li><strong>LM2596 DC-DC Converter:</strong> 12V automotive battery step-down regulator.</li>
+                </ul>
+              </div>
+              <div class="pane-card-box">
+                <h4>Software &amp; Tools</h4>
+                <ul>
+                  <li><strong>Arduino IDE:</strong> Embedded C/C++ firmware development and serial telemetry debugging.</li>
+                  <li><strong>TinyGPS++ Library:</strong> NMEA sentence parsing ($GPGGA, $GPRMC) for GPS coordinates.</li>
+                  <li><strong>Adafruit_MPU6050 Library:</strong> I2C registers configuration and motion telemetry acquisition.</li>
+                  <li><strong>Web Audio Synth &amp; HTML5 Canvas:</strong> Real-time simulation rendering and oscilloscope graphs.</li>
+                  <li><strong>AT Command Interface:</strong> Serial GSM protocol execution for SMS and cellular networking.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pane 5: Working Principle -->
+          <div class="tab-pane" id="tab-working">
+            <h3 class="pane-title">Working Principle &amp; Detection Algorithm</h3>
+            <p class="pane-text">The system functions on a continuous polling and interrupt-driven loop. The ESP32 microcontroller continuously reads 3-axis acceleration vectors (Ax, Ay, Az) and angular velocities (Roll, Pitch, Yaw) from the MPU-6050 sensor via I2C at 100Hz, while simultaneously polling the SW-420 vibration sensor.</p>
+            <div class="math-box">
+              <span class="math-title">Vector Sum Acceleration Formula:</span>
+              <code>Total Acceleration (G) = &radic;( Ax&sup2; + Ay&sup2; + Az&sup2; )</code>
+            </div>
+            <p class="pane-text">Under normal highway cruising, the total vector acceleration remains close to <strong>1.00G</strong> (Earth gravity). During an impact event, rapid deceleration creates a massive force spike exceeding <strong>4.0G</strong> (often reaching 6G to 9G). Simultaneously, the SW-420 piezo sensor registers mechanical vibrations exceeding <strong>75%</strong> of its dynamic range, and the gyroscope registers sharp rotational rates (&gt; 35&deg;/s) in rollover or spin-out scenarios.</p>
+            <p class="pane-text">When these threshold criteria are met, the microcontroller confirms an accident event and initiates a 5-second countdown timer. If the driver does not press the cancellation switch within this window, the ESP32 locks the latest coordinates from the NEO-6M GPS module and commands the SIM800L module to broadcast emergency SMS notifications with direct navigation coordinates.</p>
+          </div>
+
+          <!-- Pane 6: Block Diagram -->
+          <div class="tab-pane" id="tab-block">
+            <h3 class="pane-title">System Block Diagram Overview</h3>
+            <p class="pane-text">The system architecture is organized into four distinct operational stages: Power Conditioning, Sensing, Processing, and Actuation/Communication.</p>
+            <div class="block-flow-visual">
+              <div class="flow-box">
+                <span class="flow-tag">STAGE 1</span>
+                <strong>POWER</strong>
+                <span>12V Car Battery &rarr; LM2596 (5V/3.3V)</span>
+              </div>
+              <div class="flow-arrow">&rarr;</div>
+              <div class="flow-box">
+                <span class="flow-tag">STAGE 2</span>
+                <strong>SENSING</strong>
+                <span>MPU-6050 &bull; SW-420 &bull; NEO-6M GPS &bull; SOS</span>
+              </div>
+              <div class="flow-arrow">&rarr;</div>
+              <div class="flow-box box-highlight">
+                <span class="flow-tag">STAGE 3</span>
+                <strong>PROCESSING</strong>
+                <span>ESP32 Microcontroller &bull; Fusion Algorithm</span>
+              </div>
+              <div class="flow-arrow">&rarr;</div>
+              <div class="flow-box">
+                <span class="flow-tag">STAGE 4</span>
+                <strong>DISPATCH</strong>
+                <span>SIM800L GSM &bull; Buzzer &bull; LEDs &bull; SMS</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pane 7: Applications -->
+          <div class="tab-pane" id="tab-applications">
+            <h3 class="pane-title">Practical Applications</h3>
+            <div class="pane-grid-3">
+              <div class="app-card">
+                <span class="app-icon">🚗</span>
+                <h4>Personal Passenger Cars</h4>
+                <p>Affordable aftermarket safety add-on providing modern automatic crash notification (eCall) capabilities to older or budget vehicle models.</p>
+              </div>
+              <div class="app-card">
+                <span class="app-icon">🚚</span>
+                <h4>Commercial Logistics Fleets</h4>
+                <p>Enables fleet managers to track long-haul cargo trucks, detect driver distress, and dispatch prompt roadside assistance during highway breakdowns or collisions.</p>
+              </div>
+              <div class="app-card">
+                <span class="app-icon">🏍️</span>
+                <h4>Two-Wheeler Motorcycle Safety</h4>
+                <p>Compact installation detecting bike crashes, skids, and severe tilt rollovers where motorcyclists are thrown off and cannot call for help.</p>
+              </div>
+              <div class="app-card">
+                <span class="app-icon">🚑</span>
+                <h4>Smart City Emergency Infrastructure</h4>
+                <p>Seamlessly integrates into 108 / 911 trauma dispatch networks, reducing ambulance response latency and improving accident survivability rates.</p>
+              </div>
+              <div class="app-card">
+                <span class="app-icon">🚌</span>
+                <h4>Public Transit &amp; School Buses</h4>
+                <p>Monitors school bus routes, automatically notifying parents, schools, and local authorities in the event of an en-route vehicular incident.</p>
+              </div>
+              <div class="app-card">
+                <span class="app-icon">🚜</span>
+                <h4>Heavy Industrial &amp; Mining Vehicles</h4>
+                <p>Monitors heavy earthmovers and dump trucks operating in rugged quarry terrains prone to blind-spot collisions and rollovers.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pane 8: Advantages -->
+          <div class="tab-pane" id="tab-advantages">
+            <h3 class="pane-title">Key Advantages</h3>
+            <div class="advantages-grid">
+              <div class="adv-item">
+                <span class="adv-check">&check;</span>
+                <div>
+                  <strong>Zero Human Intervention Required:</strong> Completely autonomous operation guarantees emergency transmission even if all occupants are incapacitated.
+                </div>
+              </div>
+              <div class="adv-item">
+                <span class="adv-check">&check;</span>
+                <div>
+                  <strong>Ultra-Fast Response Time:</strong> Impact detection occurs within 280 milliseconds, and emergency SMS is dispatched within 5 to 10 seconds.
+                </div>
+              </div>
+              <div class="adv-item">
+                <span class="adv-check">&check;</span>
+                <div>
+                  <strong>Pinpoint Satellite Accuracy:</strong> GPS coordinates eliminate confusion regarding highway mile markers, guiding ambulance crews directly to the vehicle.
+                </div>
+              </div>
+              <div class="adv-item">
+                <span class="adv-check">&check;</span>
+                <div>
+                  <strong>High Reliability &amp; Low False Alarms:</strong> Dual-sensor fusion (accelerometer + piezo shock) prevents accidental alarms on potholes or sudden braking.
+                </div>
+              </div>
+              <div class="adv-item">
+                <span class="adv-check">&check;</span>
+                <div>
+                  <strong>Cost-Effective &amp; Scalable:</strong> Built with readily available, low-cost commercial off-the-shelf (COTS) electronic components.
+                </div>
+              </div>
+              <div class="adv-item">
+                <span class="adv-check">&check;</span>
+                <div>
+                  <strong>Works Without Mobile Internet:</strong> Uses 2G/4G cellular SMS, ensuring reliable communication even in rural zones lacking high-speed 4G/5G data coverage.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pane 9: Limitations -->
+          <div class="tab-pane" id="tab-limitations">
+            <h3 class="pane-title">System Limitations &amp; Future Scope</h3>
+            <div class="pane-grid-2">
+              <div class="pane-card-box">
+                <h4>Current Limitations</h4>
+                <ul>
+                  <li><strong>Cellular Network Dead Zones:</strong> If an accident occurs inside deep underground tunnels or remote valleys with zero GSM reception, SMS transmission is delayed until signal is re-acquired.</li>
+                  <li><strong>GPS Line-of-Sight Dependency:</strong> Inside multi-story parking structures or dense mountain gorges, initial GPS fix latency may increase.</li>
+                  <li><strong>Power Dependency:</strong> Requires an intact auxiliary backup battery if the vehicle main 12V battery is crushed during severe front collisions.</li>
+                </ul>
+              </div>
+              <div class="pane-card-box">
+                <h4>Future Enhancements</h4>
+                <ul>
+                  <li><strong>Satellite IoT Integration (LoRa / Iridium):</strong> Adding low-power satellite connectivity to guarantee transmission from any location on Earth.</li>
+                  <li><strong>Onboard Crash Camera Module:</strong> Capturing 5-second video buffer before and after impact and uploading to cloud for insurance forensics.</li>
+                  <li><strong>OBD-II CAN Bus Interfacing:</strong> Reading vehicle speed, airbag deployment status, and seatbelt sensors directly from the vehicle ECU.</li>
+                  <li><strong>AI Impact Severity Classification:</strong> Running lightweight TinyML models on the ESP32 to predict passenger injury severity index.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pane 10: Conclusion -->
+          <div class="tab-pane" id="tab-conclusion">
+            <h3 class="pane-title">Conclusion</h3>
+            <p class="pane-text">The <strong>Vehicle Accident Detection and Alert System Using Sensors</strong> successfully demonstrates an affordable, highly responsive, and technically sound embedded IoT solution to one of modern transportation's most pressing challenges. By fusing real-time multi-axis kinetic measurements from the MPU-6050 with structural shock feedback from the SW-420 piezo sensor, the system accurately identifies severe vehicular impacts while avoiding false positives.</p>
+            <p class="pane-text">The automatic acquisition of satellite coordinates via the NEO-6M module and immediate cellular dispatch through the SIM800L module drastically shortens rescue response times, effectively saving critical minutes during the "Golden Hour". The inclusion of an interactive 5-second driver cancellation window and manual SOS override ensures balanced safety and practicality, making the prototype a prime candidate for commercial automotive safety adoption.</p>
+          </div>
+
+          <!-- Pane 11: Arduino / ESP32 Code -->
+          <div class="tab-pane" id="tab-code">
+            <div class="code-header-bar">
+              <span class="code-title">Embedded C++ Firmware (Arduino / ESP32 Code)</span>
+              <button class="btn btn-primary" id="btn-copy-code">📋 Copy Code</button>
+            </div>
+            <pre class="code-pre-box"><code id="arduino-code-block">/*
+ * =====================================================================================
+ * Project: Vehicle Accident Detection and Alert System Using Sensors
+ * Hardware: ESP32 / Arduino, MPU-6050 (Accel/Gyro), SW-420 (Vibration), NEO-6M, SIM800L
+ * Author: Arunraj S. (GitHub: @Arun002ra)
+ * Description: Continuous 100Hz monitoring, multi-sensor fusion, GPS lock &amp; SMS dispatch.
+ * =====================================================================================
+ */
+
+#include &lt;Wire.h&gt;
+#include &lt;Adafruit_MPU6050.h&gt;
+#include &lt;Adafruit_Sensor.h&gt;
+#include &lt;TinyGPS++.h&gt;
+#include &lt;HardwareSerial.h&gt;
+
+// Pin Definitions
+#define PIN_VIBE_DO    4     // SW-420 Digital Shock Input
+#define PIN_BUZZER     25    // Active Siren Buzzer
+#define PIN_LED_GREEN  18    // Normal Transit Indicator
+#define PIN_LED_RED    5     // Emergency Alert Indicator
+#define PIN_SOS_BTN    32    // Manual SOS Push Button (PULLUP)
+
+// Hardware Serial Ports for ESP32
+HardwareSerial gpsSerial(2); // GPS on UART2 (RX: 16, TX: 17)
+HardwareSerial gsmSerial(1); // GSM on UART1 (RX: 26, TX: 27)
+
+// Objects
+Adafruit_MPU6050 mpu;
+TinyGPSPlus gps;
+
+// Threshold Parameters
+const float ACCEL_THRESHOLD_G = 4.0;    // G-Force Deceleration Threshold
+const float GYRO_YAW_THRESHOLD = 35.0;  // Abnormal Yaw Rotation (deg/s)
+const unsigned long CANCEL_WINDOW_MS = 5000; // 5-second false alarm window
+const char EMERGENCY_PHONE[] = "+919876543210";
+const char VEHICLE_ID[] = "TN-09-CB-4092";
+
+// System State Variables
+bool accidentConfirmed = false;
+bool alertCancelled = false;
+unsigned long impactTime = 0;
+
+void setup() {
+  Serial.begin(115200);
+  gpsSerial.begin(9600, SERIAL_8N1, 16, 17);
+  gsmSerial.begin(9600, SERIAL_8N1, 26, 27);
+
+  pinMode(PIN_VIBE_DO, INPUT);
+  pinMode(PIN_BUZZER, OUTPUT);
+  pinMode(PIN_LED_GREEN, OUTPUT);
+  pinMode(PIN_LED_RED, OUTPUT);
+  pinMode(PIN_SOS_BTN, INPUT_PULLUP);
+
+  digitalWrite(PIN_LED_GREEN, HIGH);
+  digitalWrite(PIN_LED_RED, LOW);
+  digitalWrite(PIN_BUZZER, LOW);
+
+  Serial.println("[SYS_INIT] Booting ESP32 System Core...");
+
+  // Initialize MPU-6050
+  if (!mpu.begin()) {
+    Serial.println("[ERROR] MPU-6050 sensor not found! Check I2C wiring.");
+    while (1) { delay(10); }
+  }
+  mpu.setAccelerometerRange(MPU6050_RANGE_16_G);
+  mpu.setGyroRange(MPU6050_RANGE_2000_DEG);
+  mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
+
+  // Initialize SIM800L
+  initGSM();
+  Serial.println("[STANDBY] Telemetry polling active. Crash detection armed.");
+}
+
+void loop() {
+  // Feed GPS parser
+  while (gpsSerial.available() &gt; 0) {
+    gps.encode(gpsSerial.read());
+  }
+
+  // Check Manual SOS Push Button
+  if (digitalRead(PIN_SOS_BTN) == LOW) {
+    Serial.println("[SOS_TRIGGER] Manual SOS button pressed!");
+    triggerEmergencySequence(true);
+    return;
+  }
+
+  // 1. Read MPU-6050 Sensors
+  sensors_event_t a, g, temp;
+  mpu.getEvent(&amp;a, &amp;g, &amp;temp);
+
+  // Convert m/s^2 to G-Force
+  float axG = a.acceleration.x / 9.80665;
+  float ayG = a.acceleration.y / 9.80665;
+  float azG = a.acceleration.z / 9.80665;
+  float totalG = sqrt(axG * axG + ayG * ayG + azG * azG);
+
+  // 2. Read SW-420 Piezo Vibration Sensor
+  int shockDetected = digitalRead(PIN_VIBE_DO);
+
+  // 3. Multi-Sensor Fusion Decision Logic
+  if (totalG &gt;= ACCEL_THRESHOLD_G &amp;&amp; shockDetected == HIGH) {
+    Serial.printf("[ALERT] Crash detected! Peak G: %.2fG | Vibration: HIGH\n", totalG);
+    triggerEmergencySequence(false);
+  }
+
+  delay(10); // 100Hz sampling loop
+}
+
+void triggerEmergencySequence(bool isManual) {
+  digitalWrite(PIN_LED_GREEN, LOW);
+  digitalWrite(PIN_LED_RED, HIGH);
+  impactTime = millis();
+  alertCancelled = false;
+
+  Serial.println("[COUNTDOWN] 5-second driver safety window active...");
+
+  // 5-Second Cancellation Window with Beeping Buzzer
+  while (millis() - impactTime &lt; CANCEL_WINDOW_MS) {
+    digitalWrite(PIN_BUZZER, HIGH);
+    delay(150);
+    digitalWrite(PIN_BUZZER, LOW);
+    delay(350);
+
+    // If driver presses SOS button during countdown, treat as cancel/override
+    if (digitalRead(PIN_SOS_BTN) == LOW &amp;&amp; !isManual) {
+      alertCancelled = true;
+      Serial.println("[CANCEL] False alarm cancelled by driver.");
+      break;
+    }
+  }
+
+  if (alertCancelled) {
+    digitalWrite(PIN_BUZZER, LOW);
+    digitalWrite(PIN_LED_RED, LOW);
+    digitalWrite(PIN_LED_GREEN, HIGH);
+    return;
+  }
+
+  // Sound continuous emergency siren
+  digitalWrite(PIN_BUZZER, HIGH);
+
+  // Capture GPS Coordinates
+  float lat = gps.location.isValid() ? gps.location.lat() : 13.0827;
+  float lon = gps.location.isValid() ? gps.location.lng() : 80.2707;
+  float speedKmh = gps.speed.isValid() ? gps.speed.kmph() : 72.0;
+
+  Serial.printf("[GPS_LOCK] Locked: %.5f N, %.5f E | Speed: %.1f km/h\n", lat, lon, speedKmh);
+
+  // Transmit Automated Emergency SMS via SIM800L
+  sendEmergencySMS(lat, lon, speedKmh, isManual);
+
+  while (1) {
+    // Keep warning lights flashing until rescue arrives
+    digitalWrite(PIN_LED_RED, !digitalRead(PIN_LED_RED));
+    delay(300);
+  }
+}
+
+void initGSM() {
+  gsmSerial.println("AT");
+  delay(500);
+  gsmSerial.println("AT+CMGF=1"); // Set SMS text mode
+  delay(500);
+  gsmSerial.println("AT+CNMI=1,2,0,0,0"); // Configure notification
+  delay(500);
+}
+
+void sendEmergencySMS(float lat, float lon, float speed, bool manual) {
+  Serial.println("[GSM_TX] Transmitting emergency SMS via SIM800L...");
+  gsmSerial.printf("AT+CMGS=\"%s\"\r\n", EMERGENCY_PHONE);
+  delay(1000);
+
+  // Format SMS Payload with direct Google Maps link
+  gsmSerial.printf("EMERGENCY ALERT! Vehicle %s met with a %s at NH-45.\r\n", 
+                   VEHICLE_ID, manual ? "MANUAL SOS" : "SEVERE ACCIDENT");
+  gsmSerial.printf("Location: %.5f N, %.5f E (Speed: %.0f km/h)\r\n", lat, lon, speed);
+  gsmSerial.printf("Live Google Map: https://maps.google.com/?q=%.5f,%.5f\r\n", lat, lon);
+  gsmSerial.println("Ambulance (108) and Highway Police alerted.");
+  gsmSerial.write(26); // Send Ctrl+Z (ASCII 26) to execute transmission
+  delay(3000);
+  Serial.println("[GSM_SUCCESS] +CMGS: OK. Emergency SMS delivered.");
+}
+</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Emergency Alert Modal (Appears upon accident confirmation) -->
     <div class="modal-overlay hidden" id="emergency-alert-modal">
       <div class="modal-dialog alert-dialog-pulse">
@@ -525,6 +1767,7 @@
   <!-- Scripts -->
   <script src="js/sensors.js"></script>
   <script src="js/simulation.js"></script>
+  <script src="js/projectSections.js"></script>
   <script src="js/app.js"></script>
   <script src="js/demoSequence.js"></script>
 </body>

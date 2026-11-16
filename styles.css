@@ -1361,3 +1361,934 @@ body {
   border-radius: 4px;
   color: var(--text-muted);
 }
+
+/* ==========================================================================
+   NEW SECTIONS: SPECIFICATIONS & PROJECT ARCHITECTURE
+   ========================================================================== */
+
+/* Quick Jump Navigation Pill Bar */
+.project-nav-bar {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 8px 16px;
+  box-shadow: var(--shadow-card);
+  position: sticky;
+  top: 10px;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+.nav-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nav-bar-title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--color-cyan-bright);
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.nav-link-pill {
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color-light);
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.nav-link-pill:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--color-cyan-bright);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Base Section Container */
+.project-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 18px 20px;
+  box-shadow: var(--shadow-card);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-color-light);
+  padding-bottom: 12px;
+}
+
+.section-heading {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.section-subheading {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.live-status-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-green);
+  font-family: var(--font-mono);
+}
+
+.badge-count {
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: var(--color-cyan-bright);
+}
+
+/* ==========================================================================
+   1. Live Working Process Columns (Matching User Reference)
+   ========================================================================== */
+.process-columns-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .process-columns-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.process-column {
+  background: #0d1424;
+  border: 1px solid var(--border-color-light);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.process-column-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color-light);
+}
+
+.col-icon {
+  font-size: 1.2rem;
+}
+
+.col-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.process-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.proc-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color-light);
+  border-radius: 7px;
+  padding: 8px 10px;
+  transition: all 0.25s ease;
+}
+
+.step-num-badge {
+  font-size: 0.62rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.step-text {
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* Dynamic Process States */
+.proc-step.step-active {
+  background: rgba(6, 182, 212, 0.12);
+  border-color: var(--color-cyan-bright);
+}
+.proc-step.step-active .step-num-badge {
+  background: var(--color-cyan);
+  color: #061320;
+}
+.proc-step.step-active .step-text {
+  color: #fff;
+  font-weight: 600;
+}
+
+.proc-step.step-completed {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+.proc-step.step-completed .step-num-badge {
+  background: var(--color-green);
+  color: #042013;
+}
+.proc-step.step-completed .step-text {
+  color: #cbd5e1;
+}
+
+.proc-step.step-alert {
+  background: rgba(239, 68, 68, 0.16);
+  border-color: var(--color-red);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+}
+.proc-step.step-alert .step-num-badge {
+  background: var(--color-red);
+  color: #fff;
+  animation: pulse-danger 1s infinite;
+}
+.proc-step.step-alert .step-text {
+  color: #fecaca;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   2. Electronic Components (10 Detailed Cards Grid)
+   ========================================================================== */
+.components-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 1400px) {
+  .components-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .components-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 550px) {
+  .components-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.comp-card {
+  background: #0d1424;
+  border: 1px solid var(--border-color-light);
+  border-radius: 9px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+}
+
+.comp-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-cyan-bright);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4), 0 0 10px rgba(56, 189, 248, 0.2);
+}
+
+.comp-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.comp-num-badge {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #0284c7;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+}
+
+.comp-pill {
+  font-size: 0.62rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.pill-normal { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+.pill-alert { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid var(--color-red); }
+.pill-amber { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+
+.comp-icon-box {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 6px 0;
+}
+
+.comp-svg {
+  width: 44px;
+  height: 44px;
+}
+
+.comp-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.comp-desc {
+  font-size: 0.69rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-top: auto;
+}
+
+/* ==========================================================================
+   3. Electronic Components and System Architecture (Block Diagram)
+   ========================================================================== */
+.architecture-diagram-container {
+  background: #080d18;
+  border: 1px solid var(--border-color-light);
+  border-radius: 10px;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.arch-canvas-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 980px;
+  position: relative;
+}
+
+.arch-block {
+  background: #111a2e;
+  border: 1.5px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px 14px;
+  width: 175px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.arch-block-tag {
+  font-size: 0.6rem;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.arch-block-title {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.arch-block-sub {
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.arch-item-list {
+  list-style: none;
+  font-size: 0.67rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.arch-status-tag {
+  margin-top: auto;
+  font-size: 0.62rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: var(--color-green);
+  text-align: center;
+}
+
+.arch-block-mcu {
+  width: 195px;
+  background: #0d1e38;
+  border-color: var(--color-cyan-bright);
+}
+
+.arch-fusion-badge {
+  font-size: 0.64rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: var(--color-cyan-bright);
+  padding: 3px 6px;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.arch-bus-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.bus-label {
+  font-size: 0.62rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--color-cyan-bright);
+  background: #091122;
+  border: 1px solid var(--border-color);
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.arch-block.arch-block-alert {
+  border-color: var(--color-red) !important;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+}
+.arch-block.arch-block-alert .arch-status-tag {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: var(--color-red);
+  color: #f87171;
+}
+
+/* ==========================================================================
+   4. Circuit Connection Details (Interactive Logical Wiring Diagram)
+   ========================================================================== */
+.circuit-diagram-wrapper {
+  background: #060b14;
+  border: 1px solid var(--border-color-light);
+  border-radius: 10px;
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.circuit-svg {
+  width: 100%;
+  min-width: 960px;
+  height: auto;
+  display: block;
+}
+
+/* Wire Stroke Styling & Pulsing Animations */
+.wire-path {
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: all 0.3s;
+}
+
+.wire-i2c {
+  stroke: #38bdf8;
+  stroke-dasharray: 6 3;
+  animation: wire-flow-cw 1.2s linear infinite;
+}
+
+.wire-pwr {
+  stroke: #ef4444;
+}
+
+.wire-uart {
+  stroke: #c084fc;
+  stroke-dasharray: 5 3;
+  animation: wire-flow-cw 1s linear infinite;
+}
+
+.wire-alert {
+  stroke: #f59e0b;
+  stroke-dasharray: 6 4;
+  animation: wire-flow-cw 1.5s linear infinite;
+}
+
+@keyframes wire-flow-cw {
+  from { stroke-dashoffset: 18; }
+  to { stroke-dashoffset: 0; }
+}
+
+.circuit-pin {
+  cursor: pointer;
+  transition: r 0.2s, filter 0.2s;
+}
+.circuit-pin:hover {
+  r: 7;
+  filter: drop-shadow(0 0 6px #fff);
+}
+
+.wire-highlight {
+  stroke-width: 4 !important;
+  stroke: #ffffff !important;
+  filter: drop-shadow(0 0 8px #38bdf8);
+}
+
+.circuit-alert-mode .wire-path {
+  animation-duration: 0.4s !important;
+}
+.circuit-alert-mode .wire-alert {
+  stroke: #ef4444 !important;
+}
+
+/* ==========================================================================
+   5. Component Connection Table
+   ========================================================================== */
+.table-responsive-box {
+  overflow-x: auto;
+}
+
+.connection-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  text-align: left;
+}
+
+.connection-table th {
+  background: #0f1c34;
+  color: #fff;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.connection-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-color-light);
+  color: var(--text-secondary);
+}
+
+.connection-table tbody tr:hover {
+  background: rgba(56, 189, 248, 0.04);
+}
+
+.connection-table code {
+  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #f1f5f9;
+}
+
+.pin-badge {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--color-cyan-bright);
+  background: rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.badge-pill {
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  display: inline-block;
+  white-space: nowrap;
+}
+.p-pwr { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+.p-i2c { background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid rgba(6, 182, 212, 0.3); }
+.p-dig { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+.p-ana { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+.p-uart { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+
+/* ==========================================================================
+   6. Project Information Tabs (Summary for Viva Presentation)
+   ========================================================================== */
+.project-tab-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--border-color-light);
+}
+
+.tab-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color-light);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+  border-color: var(--color-cyan-bright);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
+}
+
+.tab-btn-code {
+  border-color: rgba(56, 189, 248, 0.4);
+  color: var(--color-cyan-bright);
+}
+
+.tab-content-container {
+  min-height: 220px;
+}
+
+.tab-pane {
+  display: none;
+  animation: fadeIn 0.25s ease;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pane-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.pane-text {
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.pane-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.pane-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+  .pane-grid-2, .pane-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pane-card-box, .pane-callout {
+  background: #0d1424;
+  border: 1px solid var(--border-color-light);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.pane-card-box h4, .pane-callout h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.pane-card-box ul, .pane-callout ul {
+  padding-left: 18px;
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.objectives-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.obj-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #0d1424;
+  border: 1px solid var(--border-color-light);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.obj-num {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-cyan-bright);
+  font-family: var(--font-mono);
+}
+
+.math-box {
+  background: #090e18;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.math-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.math-box code {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-cyan-bright);
+}
+
+.block-flow-visual {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 14px;
+  overflow-x: auto;
+  padding: 10px 0;
+}
+
+.flow-box {
+  background: #0d1424;
+  border: 1px solid var(--border-color-light);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 170px;
+}
+
+.box-highlight {
+  border-color: var(--color-cyan-bright);
+  background: #0e1e36;
+}
+
+.flow-tag {
+  font-size: 0.6rem;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  color: var(--text-muted);
+}
+
+.flow-box strong {
+  font-size: 0.82rem;
+  color: #fff;
+}
+
+.flow-box span:last-child {
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+}
+
+.flow-arrow {
+  font-size: 1.2rem;
+  color: var(--color-cyan-bright);
+  font-weight: bold;
+}
+
+.app-card {
+  background: #0d1424;
+  border: 1px solid var(--border-color-light);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.app-icon {
+  font-size: 1.4rem;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.app-card h4 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.app-card p {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.advantages-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .advantages-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.adv-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #0d1424;
+  border: 1px solid var(--border-color-light);
+  border-radius: 7px;
+  padding: 10px 12px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.adv-check {
+  color: var(--color-green);
+  font-weight: 900;
+  font-size: 0.9rem;
+}
+
+/* Arduino Code Display & Copy Button */
+.code-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.code-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #cbd5e1;
+  font-family: var(--font-mono);
+}
+
+.btn-primary {
+  background: #0284c7;
+  color: #fff;
+}
+.btn-primary:hover {
+  background: #0369a1;
+}
+
+.btn-copied {
+  background: #10b981 !important;
+}
+
+.code-pre-box {
+  background: #060911;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 14px;
+  max-height: 480px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: #e2e8f0;
+  line-height: 1.5;
+}
+
+.code-pre-box::-webkit-scrollbar {
+  width: 6px;
+}
+.code-pre-box::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.2);
+  border-radius: 3px;
+}
+

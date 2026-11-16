@@ -255,6 +255,7 @@ class AccidentDetectionApp {
     const btnStop = document.getElementById('btn-stop-sim');
     if (btnStart) btnStart.disabled = true;
     if (btnStop) btnStop.disabled = false;
+    if (window.projectSections) window.projectSections.updateLiveState('cruising');
   }
 
   bindDOM() {
@@ -385,6 +386,7 @@ class AccidentDetectionApp {
     document.getElementById('btn-start-sim').disabled = true;
     document.getElementById('btn-stop-sim').disabled = true;
     this.setPipelineStep(2);
+    if (window.projectSections) window.projectSections.updateLiveState('collision_imminent');
     this.logTerminal("[ALERT] Forward obstacle detected at 12m. Emergency braking engaged!", "text-amber");
   }
 
@@ -398,6 +400,7 @@ class AccidentDetectionApp {
 
     // Step 2 & 3: Threshold Breached & Confirmation
     this.setPipelineStep(3);
+    if (window.projectSections) window.projectSections.updateLiveState('impact', { gForce: this.state.peakImpactG });
 
     const now = new Date();
     const timeStr = now.toLocaleTimeString();
@@ -426,6 +429,7 @@ class AccidentDetectionApp {
 
   triggerEmergencyWorkflow(isManualSOS = false) {
     this.setPipelineStep(5);
+    if (isManualSOS && window.projectSections) window.projectSections.updateLiveState('manual_sos');
 
     const modal = document.getElementById('emergency-alert-modal');
     modal.classList.remove('hidden');
@@ -503,6 +507,7 @@ class AccidentDetectionApp {
 
     this.state.alertCancelled = true;
     this.sound.stopEmergencySiren();
+    if (window.projectSections) window.projectSections.updateLiveState('cancelled');
 
     const countdownVal = document.getElementById('countdown-val');
     if (countdownVal) countdownVal.textContent = "CANCELLED";
@@ -563,6 +568,7 @@ class AccidentDetectionApp {
     if (btnStop) btnStop.disabled = false;
     const lbl = document.getElementById('start-btn-label');
     if (lbl) lbl.textContent = "Simulation Active";
+    if (window.projectSections) window.projectSections.updateLiveState('normal');
 
     this.logTerminal("--------------------------------------------------", "text-muted");
     this.logTerminal("[RESET] System state restored. Ready for new demonstration run.", "text-green");
